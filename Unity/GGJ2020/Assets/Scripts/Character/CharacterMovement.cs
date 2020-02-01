@@ -51,6 +51,8 @@ public class CharacterMovement : MonoBehaviour
             horizontal *= moveLimiter;
             vertical *= moveLimiter;
         }
+
+        MovementVector = new Vector2(horizontal, vertical);
         
         rb.velocity = MovementVector * runSpeed;
         
@@ -59,10 +61,23 @@ public class CharacterMovement : MonoBehaviour
 
     }
     public void HandleMovement() {
-       //
-       
-
-
+        horizontal = vertical = 0;
+       if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        {
+            vertical = 1;
+        }
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            vertical = -1;
+        }
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            horizontal = -1;
+        }
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            horizontal = 1;
+        }
     }
     public void HandleDash() {
         if (Input.GetKeyDown(KeyCode.Space)){
