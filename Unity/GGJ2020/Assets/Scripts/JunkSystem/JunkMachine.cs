@@ -10,10 +10,11 @@ public class JunkMachine : MonoBehaviour
 
     public GameObject JunkTypeDisplayPrefab;
     private List<eJunkType> JunkRequirements = new List<eJunkType>();
-    private List<JunkSlotDisplay> JunkTypeDisplayInstances = new List<JunkSlotDisplay>();
+    private Dictionary<eJunkType, JunkSlotDisplay> JunkSlotDisplayInstances;
     
     void Start()
     {
+        JunkSlotDisplayInstances = new Dictionary<eJunkType, JunkSlotDisplay>();
         for(int i = 0; i < JunkRequirementCount; i++)
         {
             float position = i/(float)(JunkRequirementCount - 1);
@@ -36,8 +37,18 @@ public class JunkMachine : MonoBehaviour
             CurrentJunkTypeDisplay.SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Empty);
 
             JunkRequirements.Add(CurrentRequirement);
-            JunkTypeDisplayInstances.Add(CurrentJunkTypeDisplay);
+            JunkSlotDisplayInstances.Add(CurrentRequirement, CurrentJunkTypeDisplay);
         }
+    }
+
+    public bool TrySlotJunk(eJunkType Type)
+    {
+        if (JunkRequirements.Contains(Type))
+        {
+            JunkSlotDisplayInstances[Type].SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Filled);
+            return true;
+        }
+        return false;
     }
 
 }
