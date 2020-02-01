@@ -10,8 +10,8 @@ public class JunkSlotDisplay : MonoBehaviour
         Filled,
         Empty
     }
-    private eJunkType MyJunkType;
-    private eJunkSlotStatus MySlotStatus;
+    public eJunkType JunkType { get; private set; }
+    public eJunkSlotStatus SlotStatus { get; private set; }
     private SpriteRenderer MySpriteRenderer;
 
     void Start()
@@ -20,13 +20,13 @@ public class JunkSlotDisplay : MonoBehaviour
     }
     public void SetJunkType(eJunkType JunkType)
     {
-        MyJunkType = JunkType;
+        this.JunkType = JunkType;
         UpdateSprite();
     }
 
     public void SetSlotStatus(eJunkSlotStatus NewStatus)
     {
-        MySlotStatus = NewStatus;
+        SlotStatus = NewStatus;
         UpdateSprite();
     }
 
@@ -37,13 +37,13 @@ public class JunkSlotDisplay : MonoBehaviour
             MySpriteRenderer = GetComponent<SpriteRenderer>();
         }
         JunkSlotDataAccessor Accessor = JunkSlotDataAccessor.GetInstance();
-        switch(MySlotStatus)
+        switch(SlotStatus)
         {
         case eJunkSlotStatus.Filled:
-            MySpriteRenderer.sprite = Accessor.GetDefinitionByType(MyJunkType).FullSprite;
+            MySpriteRenderer.sprite = Accessor.GetDefinitionByType(JunkType).FullSprite;
             break;
         case eJunkSlotStatus.Empty:
-            MySpriteRenderer.sprite = Accessor.GetDefinitionByType(MyJunkType).EmptySprite;
+            MySpriteRenderer.sprite = Accessor.GetDefinitionByType(JunkType).EmptySprite;
             break;
         }
     }
