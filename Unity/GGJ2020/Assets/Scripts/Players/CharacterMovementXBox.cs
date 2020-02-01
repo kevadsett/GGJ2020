@@ -20,8 +20,8 @@ public class CharacterMovementXBox : MonoBehaviour
     {
         controls = new PlayerControls();
 
-        controls.Gameplay.movement.performed += ctx => MovementVector = ctx.ReadValue<Vector2>();
-        controls.Gameplay.movement.canceled += ctx => MovementVector = Vector2.zero;
+        controls.Gameplay.Movement.performed += ctx => MovementVector = ctx.ReadValue<Vector2>();
+        controls.Gameplay.Movement.canceled += ctx => MovementVector = Vector2.zero;
     }
     void Start()
     {
@@ -55,7 +55,7 @@ public class CharacterMovementXBox : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("controls:" + controls.Gameplay);
+        //Debug.Log("controls:" + controls.Gameplay);
         controls.Gameplay.Enable();
     }
     private void OnDisable()

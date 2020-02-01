@@ -12,6 +12,6 @@ public class PlayerId : MonoBehaviour
     void Start()
     {
         Id = NextPlayerId++;
-        Debug.Log("Player spawned with ID: " + Id);
+        //Debug.Log("Player spawned with ID: " + Id);
     }
 }
