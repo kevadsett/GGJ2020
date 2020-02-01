@@ -40,7 +40,7 @@ public class GameStateMachine : MonoBehaviour
     
     public void ChangeState(eGameState NewState)
     {
-        Debug.Log("Changing state from " + (CurrentState == null ? "no state" : CurrentState.ToString()) + " to " + NewState.ToString());
+        //Debug.Log("Changing state from " + (CurrentState == null ? "no state" : CurrentState.ToString()) + " to " + NewState.ToString());
         if (CurrentState != null)
         {
             CurrentState.OnExit();
