@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703910479be9448ecade3036429fee8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PointsRequiredToWin: 3
+  PointsRequiredToWin: 1
 --- !u!1 &555982484
 GameObject:
   m_ObjectHideFlags: 0
