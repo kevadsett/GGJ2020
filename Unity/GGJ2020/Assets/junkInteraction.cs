@@ -29,7 +29,7 @@ public class junkInteraction : MonoBehaviour
            
             isCarrying = true;
             currentObj.SetActive(isCarrying);
-            currentObj.GetComponent<JunkBehaviour>().JunkType = other.GetComponent<JunkBehaviour>().JunkType;
+            currentObj.GetComponent<JunkBehaviour>().SetJunkType(other.GetComponent<JunkBehaviour>().JunkType);
           Debug.Log("currentObject type: " + currentObj.GetComponent<JunkBehaviour>().JunkType + " other: " + other.GetComponent<JunkBehaviour>().JunkType);
             
             Destroy(other.gameObject);
