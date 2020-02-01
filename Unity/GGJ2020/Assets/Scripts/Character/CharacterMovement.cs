@@ -13,24 +13,21 @@ public class CharacterMovement : MonoBehaviour
     float vertical;
     float moveLimiter = 0.7f;
 
-    public float runSpeed = 5.0f;
+    public float BaseRunSpeed = 5.0f;
+    public float MaxDashOffset = 5.0f;
+    private float runSpeed = 5.0f;
     private Vector2 MovementVector;
 
     private float dashTime;
 
     [SerializeField]
-    private float timer=0;
+    private float timer;
     public AnimationCurve animationCurve;
 
-    private void Awake()
-    {
-        //controls = new PlayerControls();
-
-        //controls.Gameplay.movement.performed += ctx => Grow();
-    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        timer = 999;
     }
 
     void Update()
@@ -39,6 +36,7 @@ public class CharacterMovement : MonoBehaviour
         HandleMovement();
 
         timer += Time.deltaTime;
+        runSpeed = BaseRunSpeed + animationCurve.Evaluate(timer) * MaxDashOffset;
         HandleDash();
 
     }
@@ -55,10 +53,6 @@ public class CharacterMovement : MonoBehaviour
         MovementVector = new Vector2(horizontal, vertical);
         
         rb.velocity = MovementVector * runSpeed;
-        
-
-        
-
     }
     public void HandleMovement() {
         horizontal = vertical = 0;
@@ -81,11 +75,7 @@ public class CharacterMovement : MonoBehaviour
     }
     public void HandleDash() {
         if (Input.GetKeyDown(KeyCode.Space)){
-            //Change the runSpeed for a lot 
-            
-           // runSpeed = runSpeed + animationCurve.Evaluate(timer) ;
-            Debug.Log("runSpeed= " + animationCurve.Evaluate(timer));
-            
+            timer = 0;
         }
     }
     

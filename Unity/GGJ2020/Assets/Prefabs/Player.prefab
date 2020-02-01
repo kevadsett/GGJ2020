@@ -142,12 +142,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5572012899491644107}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14739962e799d404d91826dd49212aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 5
+  BaseRunSpeed: 5
+  MaxDashOffset: 10
   timer: 0
   animationCurve:
     serializedVersion: 2
@@ -162,8 +163,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
+      time: 0.1
       value: 1
+      inSlope: 0.05660391
+      outSlope: 0.05660391
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.625
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.3
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
