@@ -17,7 +17,6 @@ public class JunkMachine : MonoBehaviour
         for(int i = 0; i < JunkRequirementCount; i++)
         {
             float position = i/(float)(JunkRequirementCount - 1);
-            Debug.Log(position);
 
             position *= Mathf.PI;
             position -= Mathf.PI / 2f;
