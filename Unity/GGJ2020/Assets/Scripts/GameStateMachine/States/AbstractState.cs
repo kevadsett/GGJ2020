@@ -1,7 +1,7 @@
 using UnityEngine;
 public abstract class AbstractState : IGameState
 {
-    private GameStateMachine StateMachine;
+    protected GameStateMachine StateMachine;
     private GameObject StateUIPrefab;
     private GameObject StateUIInstance;
     public AbstractState(GameStateMachine InStateMachine, GameObject InStateUI)
@@ -9,17 +9,17 @@ public abstract class AbstractState : IGameState
         StateMachine = InStateMachine;
         StateUIPrefab = InStateUI;
     }
-    public void OnEnter()
+    virtual public void OnEnter()
     {
         StateUIInstance = GameObject.Instantiate(StateUIPrefab, StateMachine.UICanvas);
     }
-    
-    public void Update()
+
+    virtual public void Update()
     {
         // override in concrete class
     }
 
-    public void OnExit()
+    virtual public void OnExit()
     {
         GameObject.Destroy(StateUIInstance);
     }
