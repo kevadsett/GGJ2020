@@ -1,9 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class JunkMachine : MonoBehaviour
 {
+
+    public static int NextMachineId = 0;
+
+    [System.Serializable]
+    public class MyIntEvent : UnityEvent<int>
+    {
+    }
+    public static UnityEvent<int> RequirementsMetEvent = new MyIntEvent();
+
+    public int MachineId;
     public int JunkRequirementCount;
 
     public Transform JunkDisplayPointCentre;
@@ -14,6 +25,7 @@ public class JunkMachine : MonoBehaviour
     
     void Start()
     {
+        MachineId = NextMachineId++;
         JunkSlotDisplayInstances = new Dictionary<eJunkType, List<JunkSlotDisplay>>();
         for(int i = 0; i < JunkRequirementCount; i++)
         {
@@ -49,8 +61,13 @@ public class JunkMachine : MonoBehaviour
         }
     }
 
-    public bool TrySlotJunk(eJunkType Type)
+    public bool TrySlotJunk(eJunkType Type, int PlayerId)
     {
+        if (PlayerId != MachineId)
+        {
+            return false;
+        }
+
         if (JunkRequirements.Contains(Type) == false)
         {
             return false;

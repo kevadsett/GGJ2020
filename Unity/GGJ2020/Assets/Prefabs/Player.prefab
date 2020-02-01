@@ -214,8 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20152ef8bb20b9c41b99d41b244522da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayPoint: {fileID: 0}
-  currentObj: {fileID: 0}
+  currentObj: {fileID: 313803998}
+  isCarrying: 0
 --- !u!114 &1637167596800200068
 MonoBehaviour:
   m_ObjectHideFlags: 0
