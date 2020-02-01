@@ -11,6 +11,8 @@ public class junkInteraction : MonoBehaviour
     public bool isCarrying = false;
 
     private PlayerId MyId;
+
+    private GameObject CurrentInactiveJunk;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,10 +26,16 @@ public class junkInteraction : MonoBehaviour
         switch (other.tag)
         {
         case "Junk":
+            if (isCarrying)
+            {
+                CurrentInactiveJunk.transform.position = MyJunk.transform.position;
+                CurrentInactiveJunk.SetActive(true);
+            }
             isCarrying = true;
             JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
             MyJunk.SetJunkType(TheirJunk.JunkType);
-            Destroy(other.gameObject);
+            CurrentInactiveJunk = other.gameObject;
+            CurrentInactiveJunk.SetActive(false);
             break;
         case "JunkMachine":
             if (isCarrying == false)
