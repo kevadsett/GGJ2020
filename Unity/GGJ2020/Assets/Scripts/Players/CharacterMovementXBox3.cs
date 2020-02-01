@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovementXBox3 : MonoBehaviour
 {
     PlayerControls controls;
     // Start is called before the first frame update
@@ -16,17 +16,12 @@ public class CharacterMovement : MonoBehaviour
     public float runSpeed = 5.0f;
     private Vector2 MovementVector;
 
-    private float dashTime;
-
-    [SerializeField]
-    private float timer=0;
-    public AnimationCurve animationCurve;
-
     private void Awake()
     {
-        //controls = new PlayerControls();
+        controls = new PlayerControls();
 
-        //controls.Gameplay.movement.performed += ctx => Grow();
+        controls.Gameplay3.movement.performed += ctx => MovementVector = ctx.ReadValue<Vector2>();
+        controls.Gameplay3.movement.canceled += ctx => MovementVector = Vector2.zero;
     }
     void Start()
     {
@@ -36,11 +31,7 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         // Gives a value between -1 and 1
-        HandleMovement();
-
-        timer += Time.deltaTime;
         HandleDash();
-
     }
 
     void FixedUpdate()
@@ -51,27 +42,24 @@ public class CharacterMovement : MonoBehaviour
             horizontal *= moveLimiter;
             vertical *= moveLimiter;
         }
-        
         rb.velocity = MovementVector * runSpeed;
-        
-
-        
-
     }
-    public void HandleMovement() {
-       //
-       
-
-
-    }
-    public void HandleDash() {
-        if (Input.GetKeyDown(KeyCode.Space)){
-            //Change the runSpeed for a lot 
-            
-           // runSpeed = runSpeed + animationCurve.Evaluate(timer) ;
-            Debug.Log("runSpeed= " + animationCurve.Evaluate(timer));
-            
+    public void HandleDash()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Change the runSpeed for a lot    
         }
     }
-    
+
+
+    private void OnEnable()
+    {
+        Debug.Log("controls:" + controls.Gameplay);
+        controls.Gameplay3.Enable();
+    }
+    private void OnDisable()
+    {
+        controls.Gameplay3.Disable();
+    }
 }

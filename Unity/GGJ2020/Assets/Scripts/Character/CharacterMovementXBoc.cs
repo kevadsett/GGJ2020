@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovementXbBoc : MonoBehaviour
 {
     PlayerControls controls;
     // Start is called before the first frame update
@@ -24,9 +24,10 @@ public class CharacterMovement : MonoBehaviour
 
     private void Awake()
     {
-        //controls = new PlayerControls();
+        controls = new PlayerControls();
 
-        //controls.Gameplay.movement.performed += ctx => Grow();
+        controls.Gameplay.movement.performed += ctx => MovementVector = ctx.ReadValue<Vector2>();
+        controls.Gameplay.movement.canceled += ctx => MovementVector = Vector2.zero;
     }
     void Start()
     {
@@ -36,7 +37,7 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         // Gives a value between -1 and 1
-        HandleMovement();
+       
 
         timer += Time.deltaTime;
         HandleDash();
@@ -58,12 +59,7 @@ public class CharacterMovement : MonoBehaviour
         
 
     }
-    public void HandleMovement() {
-       //
-       
-
-
-    }
+   
     public void HandleDash() {
         if (Input.GetKeyDown(KeyCode.Space)){
             //Change the runSpeed for a lot 
@@ -73,5 +69,18 @@ public class CharacterMovement : MonoBehaviour
             
         }
     }
-    
+    public void Grow()
+    {
+        //transform.localScale *= 1.1f;
+        Debug.Log("controls:" + controls.Gameplay.movement.ReadValueAsObject().ToString());
+    }
+
+    private void OnEnable()
+    {
+        controls.Gameplay.Enable();
+    }
+    private void OnDisable()
+    {
+        controls.Gameplay.Disable();
+    }
 }
