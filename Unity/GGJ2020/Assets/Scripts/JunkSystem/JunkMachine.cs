@@ -23,6 +23,7 @@ public class JunkMachine : MonoBehaviour
     private List<eJunkType> JunkRequirements = new List<eJunkType>();
     private Dictionary<eJunkType, List<JunkSlotDisplay>> JunkSlotDisplayInstances;
     
+    private int CurrentlyMetRequirements;
     void Start()
     {
         MachineId = NextMachineId++;
@@ -81,6 +82,11 @@ public class JunkMachine : MonoBehaviour
             }
 
             JunkSlot.SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Filled);
+            CurrentlyMetRequirements++;
+            if (CurrentlyMetRequirements == JunkRequirementCount)
+            {
+                RequirementsMetEvent.Invoke(PlayerId);
+            }
             return true;
         }
         return false;

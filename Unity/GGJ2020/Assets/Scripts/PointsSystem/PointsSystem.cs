@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public class PointsSystem : MonoBehaviour
 {
-    public static int NextMachineId = 0;
-
     public static UnityEvent PlayerWinEvent = new UnityEvent();
 
     public static int WinningPlayer;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerId : MonoBehaviour
 {
-    static private int NextPlayerId = 0;
+    static public int NextPlayerId = 0;
     
     public int Id { get; private set; }
 
