@@ -32,6 +32,7 @@ public class junkInteraction : MonoBehaviour
             currentObj.GetComponent<JunkBehaviour>().JunkType = other.GetComponent<JunkBehaviour>().JunkType;
           Debug.Log("currentObject type: " + currentObj.GetComponent<JunkBehaviour>().JunkType + " other: " + other.GetComponent<JunkBehaviour>().JunkType);
             
+            
             Destroy(other.gameObject);
         }
         
