@@ -13,6 +13,7 @@ public class junkInteraction : MonoBehaviour
     private PlayerId MyId;
 
     private GameObject CurrentInactiveJunk;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -30,6 +31,7 @@ public class junkInteraction : MonoBehaviour
             {
                 CurrentInactiveJunk.transform.position = MyJunk.transform.position;
                 CurrentInactiveJunk.SetActive(true);
+               
             }
             isCarrying = true;
             JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
