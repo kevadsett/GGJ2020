@@ -7,5 +7,6 @@ using UnityEngine;
 public class JunkSlotDefinition : ScriptableObject
 {
     public eJunkType Type;
-    public Sprite Sprite;
+    public Sprite FullSprite;
+    public Sprite EmptySprite;
 }
