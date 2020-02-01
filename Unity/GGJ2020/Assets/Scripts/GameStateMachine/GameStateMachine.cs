@@ -10,6 +10,10 @@ public enum eGameState
 }
 public class GameStateMachine : MonoBehaviour
 {
+    public Transform UICanvas;
+    public GameObject TitleStateUIPrefab;
+    public GameObject RunningStateUIPrefab;
+    public GameObject ResultsStateUIPrefab;
     public eGameState DefaultState = eGameState.Title;
     private Dictionary<eGameState, IGameState> StateMap;
     private IGameState CurrentState;
@@ -18,9 +22,9 @@ public class GameStateMachine : MonoBehaviour
     {
         StateMap = new Dictionary<eGameState, IGameState>
         {
-            { eGameState.Title, new TitleState(this) },
-            { eGameState.Running, new RunningState(this) },
-            { eGameState.Results, new ResultsState(this) },
+            { eGameState.Title, new TitleState(this, TitleStateUIPrefab) },
+            { eGameState.Running, new RunningState(this, RunningStateUIPrefab) },
+            { eGameState.Results, new ResultsState(this, ResultsStateUIPrefab) },
         };
 
         ChangeState(DefaultState);

@@ -1,22 +1,7 @@
-﻿public class TitleState : IGameState
+﻿using UnityEngine;
+public class TitleState : AbstractState
 {
-    public GameStateMachine StateMachine { get; private set; }
-    public TitleState(GameStateMachine InStateMachine)
+    public TitleState (GameStateMachine InStateMachine, GameObject InStateUI) : base(InStateMachine, InStateUI)
     {
-        StateMachine = InStateMachine;
-    }
-    public void OnEnter()
-    {
-
-    }
-    
-    public void Update()
-    {
-        
-    }
-
-    public void OnExit()
-    {
-
     }
 }

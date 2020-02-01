@@ -1,23 +1,7 @@
-﻿public class RunningState : IGameState
+﻿using UnityEngine;
+public class RunningState : AbstractState
 {
-    public GameStateMachine StateMachine { get; private set; }
-
-    public RunningState(GameStateMachine InStateMachine)
+    public RunningState(GameStateMachine InStateMachine, GameObject InStateUI) : base(InStateMachine, InStateUI)
     {
-        StateMachine = InStateMachine;
-    }
-    public void OnEnter()
-    {
-
-    }
-    
-    public void Update()
-    {
-        
-    }
-
-    public void OnExit()
-    {
-        
     }
 }
