@@ -1,44 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(PlayerId))]
 public class junkInteraction : MonoBehaviour
 {
     // Start is called before the first frame update
     Rigidbody2D rb;
 
-    public GameObject currentObj;
+    public JunkBehaviour MyJunk;
 
     public bool isCarrying = false;
+
+    private PlayerId MyId;
+
+    private GameObject CurrentInactiveJunk;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentObj.SetActive(false);
-
+        MyJunk.gameObject.SetActive(false);
+        MyJunk.GetComponent<Rigidbody2D>().Sleep();
+        MyId = GetComponent<PlayerId>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void OnTriggerEnter2D(Collider2D other)
     {
-      
-        if (other.tag == "Junk") {
-           if(isCarrying == false)
+        switch (other.tag)
+        {
+        case "Junk":
+            if (isCarrying)
             {
-            isCarrying = true;
-            currentObj.SetActive(isCarrying);
-
+                CurrentInactiveJunk.transform.position = MyJunk.transform.position;
+                CurrentInactiveJunk.SetActive(true);
             }
-            
-           // currentObj.GetComponent<JunkBehaviour>().JunkType = 
-          
-          //  currentObj.transform.GetChild(0).GetComponent<JunkBehaviour>().SetJunkType= other.gameObject.GetComponent<JunkBehaviour>().JunkType;
-
-            Destroy(other.gameObject);
+            isCarrying = true;
+            JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
+            MyJunk.SetJunkType(TheirJunk.JunkType);
+            CurrentInactiveJunk = other.gameObject;
+            CurrentInactiveJunk.SetActive(false);
+            break;
+        case "JunkMachine":
+            if (isCarrying == false)
+            {
+                break;
+            }
+            JunkMachine JunkMachine = other.GetComponent<JunkMachine>();
+            if (JunkMachine.TrySlotJunk(MyJunk.JunkType, MyId.Id))
+            {
+                isCarrying = false;
+            }
+            break;
         }
+        MyJunk.gameObject.SetActive(isCarrying);
         
     }
 }

@@ -25,6 +25,7 @@ public class JunkBehaviour : MonoBehaviour
 
     public void SetJunkType(eJunkType NewType)
     {
+        JunkType = NewType;
         MyJunkSlotDisplay.SetJunkType(JunkType);
     }
 }

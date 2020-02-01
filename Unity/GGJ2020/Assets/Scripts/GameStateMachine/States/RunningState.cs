@@ -10,5 +10,18 @@ public class RunningState : AbstractState
     {
         base.OnEnter();
         SceneManager.LoadScene("Running", LoadSceneMode.Additive);
+
+        PointsSystem.PlayerWinEvent.AddListener(OnPlayerWin);
+    }
+
+    override public void OnExit()
+    {
+        base.OnExit();
+        SceneManager.UnloadSceneAsync("Running");
+    }
+
+    private void OnPlayerWin()
+    {
+        StateMachine.ChangeState(eGameState.Results);
     }
 }
