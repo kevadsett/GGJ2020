@@ -14,6 +14,8 @@ public class JunkMachine : MonoBehaviour
     }
     public static UnityEvent<int> RequirementsMetEvent = new MyIntEvent();
 
+    public static UnityEvent JunkSlottedEvent = new UnityEvent();
+
     public int MachineId;
     public int JunkRequirementCount;
 
@@ -83,6 +85,7 @@ public class JunkMachine : MonoBehaviour
 
             JunkSlot.SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Filled);
             CurrentlyMetRequirements++;
+            JunkSlottedEvent.Invoke();
             if (CurrentlyMetRequirements == JunkRequirementCount)
             {
                 RequirementsMetEvent.Invoke(PlayerId);
