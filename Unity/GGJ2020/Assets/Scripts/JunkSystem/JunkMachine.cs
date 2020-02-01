@@ -10,11 +10,11 @@ public class JunkMachine : MonoBehaviour
 
     public GameObject JunkTypeDisplayPrefab;
     private List<eJunkType> JunkRequirements = new List<eJunkType>();
-    private Dictionary<eJunkType, JunkSlotDisplay> JunkSlotDisplayInstances;
+    private Dictionary<eJunkType, List<JunkSlotDisplay>> JunkSlotDisplayInstances;
     
     void Start()
     {
-        JunkSlotDisplayInstances = new Dictionary<eJunkType, JunkSlotDisplay>();
+        JunkSlotDisplayInstances = new Dictionary<eJunkType, List<JunkSlotDisplay>>();
         for(int i = 0; i < JunkRequirementCount; i++)
         {
             float position = i/(float)(JunkRequirementCount - 1);
@@ -37,15 +37,33 @@ public class JunkMachine : MonoBehaviour
             CurrentJunkTypeDisplay.SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Empty);
 
             JunkRequirements.Add(CurrentRequirement);
-            JunkSlotDisplayInstances.Add(CurrentRequirement, CurrentJunkTypeDisplay);
+
+            if (JunkSlotDisplayInstances.ContainsKey(CurrentRequirement))
+            {
+                JunkSlotDisplayInstances[CurrentRequirement].Add(CurrentJunkTypeDisplay);
+            }
+            else
+            {
+                JunkSlotDisplayInstances.Add(CurrentRequirement, new List<JunkSlotDisplay> { CurrentJunkTypeDisplay });
+            }
         }
     }
 
     public bool TrySlotJunk(eJunkType Type)
     {
-        if (JunkRequirements.Contains(Type))
+        if (JunkRequirements.Contains(Type) == false)
         {
-            JunkSlotDisplayInstances[Type].SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Filled);
+            return false;
+        }
+
+        foreach (JunkSlotDisplay JunkSlot in JunkSlotDisplayInstances[Type])
+        {
+            if (JunkSlot.SlotStatus == JunkSlotDisplay.eJunkSlotStatus.Filled)
+            {
+                continue;
+            }
+
+            JunkSlot.SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Filled);
             return true;
         }
         return false;
