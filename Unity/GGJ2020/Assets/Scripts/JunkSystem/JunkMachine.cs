@@ -45,6 +45,10 @@ public class JunkMachine : MonoBehaviour
         JunkSlotDisplayInstances = new Dictionary<eJunkType, List<JunkSlotDisplay>>();
         
         MyJunkRequirement = PossibleJunkRequirements.List[Random.Range(0, PossibleJunkRequirements.List.Count)];
+
+        MyJunkRequirement.JunkTypeList.Sort((a, b) => {
+            return 1 - 2 * Random.Range(0, 2);
+        });
         
         float SlotSpreadAngleRadians = SlotSpreadAngleDegrees / 180 * Mathf.PI;
 
@@ -68,7 +72,7 @@ public class JunkMachine : MonoBehaviour
 
             JunkSlotDisplay CurrentJunkTypeDisplay = JunkTypeDisplayObject.GetComponent<JunkSlotDisplay>();
 
-            eJunkType CurrentRequirement = (eJunkType)Random.Range(0, 3);
+            eJunkType CurrentRequirement = MyJunkRequirement.JunkTypeList[i];
             CurrentJunkTypeDisplay.SetJunkType(CurrentRequirement);
             CurrentJunkTypeDisplay.SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Empty);
 
