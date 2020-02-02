@@ -138,7 +138,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  StunDuration: 1
+  StunDuration: 1.5
 --- !u!114 &5572012899491644101
 MonoBehaviour:
   m_ObjectHideFlags: 0
