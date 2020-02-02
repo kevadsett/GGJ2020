@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5572012899491644100}
   - component: {fileID: 5572012899491644101}
   - component: {fileID: 5572012899491644106}
-  - component: {fileID: 5572012899491644099}
+  - component: {fileID: 7851340145785126689}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -100,6 +100,7 @@ MonoBehaviour:
   BaseRunSpeed: 5
   MaxDashOffset: 10
   charAnimator: {fileID: 5761173657148073614}
+  isDashing: 0
   timer: 0
   animationCurve:
     serializedVersion: 2
@@ -148,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyJunk: {fileID: 5572012900040296041}
   isCarrying: 0
+  CurrentInactiveJunk: {fileID: 0}
 --- !u!114 &5572012899491644106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5965b0ed0586b4594aab3de0382188a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5572012899491644099
+--- !u!114 &7851340145785126689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,10 +171,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 5572012899491644107}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606e05e20ef8b014c9463e10b7d4d916, type: 3}
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 5
+  m_Actions: {fileID: -944628639613478452, guid: 557d835f96e19e444adf431aee5dda35,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Gamepad
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &5572012900040296046
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465b7245c14004df4b6e34ca2b9b5932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MyId: 0
   JunkSlotDisplayPrefab: {fileID: 7051950598953853334, guid: 6e909cbe0812b4475a711672e014541e,
     type: 3}
 --- !u!50 &5572012900040296043
