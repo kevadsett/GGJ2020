@@ -23,7 +23,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""46f6f96b-29c4-4976-acd6-2706fc4dfedd"",
                     ""expectedControlType"": """",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone(min=0.3)"",
                     ""interactions"": """"
                 },
                 {
