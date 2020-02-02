@@ -97,11 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14739962e799d404d91826dd49212aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScreenRenderer: {fileID: 5761173656945073051}
+  StunnedMaterial: {fileID: 2100000, guid: c82b88b9214db4ddaa363dfc4b9faf64, type: 2}
   BaseRunSpeed: 5
   MaxDashOffset: 10
   charAnimator: {fileID: 5761173657148073614}
-  isDashing: 0
-  timer: 0
+  DashTimer: 0
   animationCurve:
     serializedVersion: 2
     m_Curve:
@@ -135,6 +136,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  StunDuration: 1
 --- !u!114 &5572012899491644101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5965b0ed0586b4594aab3de0382188a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 0
 --- !u!114 &7851340145785126689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,7 +291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465b7245c14004df4b6e34ca2b9b5932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyId: 0
   JunkSlotDisplayPrefab: {fileID: 7051950598953853334, guid: 6e909cbe0812b4475a711672e014541e,
     type: 3}
 --- !u!50 &5572012900040296043
@@ -490,3 +492,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e222e873051beee45998bc5ba233132b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!23 &5761173656945073051 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2720401831256274569, guid: 26ce8804b3408f94fbb0ca191afd912c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7652464486293875986}
+  m_PrefabAsset: {fileID: 0}

@@ -39,10 +39,6 @@ public class junkInteraction : MonoBehaviour
             CurrentInactiveJunk = other.gameObject;
             CurrentInactiveJunk.SetActive(false);
             break;
-        case "Player":
-            if (this.GetComponent<CharacterMovement>().isDashing) {
-                    dropJunk();
-            } break;
         case "JunkMachine":
             if (isCarrying == false)
             {
@@ -62,7 +58,11 @@ public class junkInteraction : MonoBehaviour
     {
         if(col.gameObject.tag == "Player" )
         {
-            if (col.gameObject.GetComponent<CharacterMovement>().isDashing) dropJunk();
+            if (col.gameObject.GetComponent<CharacterMovement>().State == CharacterMovement.eState.Dashing)
+            {
+                GetComponent<CharacterMovement>().SetStunned();
+                dropJunk();
+            }
         }
     }
 

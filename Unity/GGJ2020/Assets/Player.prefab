@@ -95,7 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465b7245c14004df4b6e34ca2b9b5932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyId: 0
   JunkSlotDisplayPrefab: {fileID: 7051950598953853334, guid: 6e909cbe0812b4475a711672e014541e,
     type: 3}
 --- !u!50 &5577456208038655744
@@ -246,8 +245,7 @@ MonoBehaviour:
   BaseRunSpeed: 5
   MaxDashOffset: 10
   charAnimator: {fileID: 6291292975757206564}
-  isDashing: 0
-  timer: 0
+  DashTimer: 0
   animationCurve:
     serializedVersion: 2
     m_Curve:
@@ -281,6 +279,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  StunDuration: 1
 --- !u!114 &5577456208578818990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,6 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5965b0ed0586b4594aab3de0382188a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 0
 --- !u!114 &-356552079349600333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: eebdf56f11aa31a4cb8d92919dd9bca2,
+  m_Actions: {fileID: -944628639613478452, guid: 557d835f96e19e444adf431aee5dda35,
     type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
@@ -335,8 +335,8 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: New control scheme
-  m_DefaultActionMap: b5420d40-7613-46f9-af16-8c1138082e1f
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &3270519522499100118
@@ -459,6 +459,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2720401831256274569, guid: 26ce8804b3408f94fbb0ca191afd912c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c82b88b9214db4ddaa363dfc4b9faf64, type: 2}
     - target: {fileID: 2720401831256274570, guid: 26ce8804b3408f94fbb0ca191afd912c,
         type: 3}
       propertyPath: m_Mesh
