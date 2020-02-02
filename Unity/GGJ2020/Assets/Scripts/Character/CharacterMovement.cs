@@ -23,22 +23,23 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float timer;
     public AnimationCurve animationCurve;
+    [Space]
+    private Vector2 i_movement;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         timer = 999;
     }
-
     void Update()
     {
         // Gives a value between -1 and 1
-        HandleMovement();
+        //HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
+        Movement();
 
         timer += Time.deltaTime;
         if (timer >= 0.2f) isDashing = false;
         runSpeed = BaseRunSpeed + animationCurve.Evaluate(timer) * MaxDashOffset;
         HandleDash();
-
     }
 
     void FixedUpdate()
@@ -90,7 +91,7 @@ public class CharacterMovement : MonoBehaviour
        // }
     }
     public void HandleDash() {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1)
+        if ((Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1 ))
         {
             timer = 0;
             isDashing = true;
@@ -101,6 +102,21 @@ public class CharacterMovement : MonoBehaviour
         }
        
     }
-    
+    public void OnMovement(InputValue value)
+    {
+        
+        i_movement = value.Get<Vector2>();
+    }
+
+    public void OnDash(InputValue value)
+    {
+        timer = 0;
+        isDashing = true;
+    }
+    public void Movement()
+    {
+        horizontal = i_movement.x;
+        vertical = i_movement.y;
+    }
 
 }
