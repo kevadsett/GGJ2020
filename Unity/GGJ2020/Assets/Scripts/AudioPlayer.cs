@@ -25,6 +25,7 @@ public class AudioPlayer : MonoBehaviour
 		}
 
 		source.transform.position = position;
+		source.panStereo = position.x / 10;
 		source.Play ();
 	}
 

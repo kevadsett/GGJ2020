@@ -48,8 +48,8 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         // Gives a value between -1 and 1
-        //HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
-         Movement();
+        HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
+        // Movement();
 
         timer += Time.deltaTime;
         if (timer >= 0.2f) isDashing = false;
@@ -113,10 +113,13 @@ public class CharacterMovement : MonoBehaviour
         {
             timer = 0;
             isDashing = true;
+            AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
+
         } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
         {
             timer = 0;
             isDashing = true;
+            AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         }
        
     }
