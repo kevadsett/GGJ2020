@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Vector3 movementVec;
+    public float maxAnimSpeed;
+    public CharacterPartDirOffset[] offsettableParts;
+    public CharacterPartBouncer[] bounceableParts;
 
-    // Update is called once per frame
-    void Update()
+    Vector3 offsetVec;
+
+    void LateUpdate()
     {
-        
+
+        movementVec = new Vector3 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+
+        Vector3 delta = movementVec.normalized - offsetVec;
+        float magnitude = Mathf.Min (delta.magnitude, maxAnimSpeed * Time.deltaTime);
+
+        offsetVec += delta.normalized * magnitude;
+
+        for (int i = 0; i < offsettableParts.Length; i++)
+        {
+            offsettableParts[i].OffsetUpdate (offsetVec);
+        }
+
+        for (int i = 0; i < bounceableParts.Length; i++)
+        {
+            bounceableParts[i].UpdateBounciness (offsetVec);
+        }
     }
 }
