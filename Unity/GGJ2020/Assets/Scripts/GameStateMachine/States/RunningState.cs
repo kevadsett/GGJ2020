@@ -15,6 +15,9 @@ public class RunningState : AbstractState
         GameObject.FindObjectsOfType<PointsSystem>()[0].Reset();
 
         PointsSystem.PlayerWinEvent.AddListener(OnPlayerWin);
+
+        AudioPlayer.StopSound ("Music_Menu");
+        AudioPlayer.PlaySound ("Music_Gameplay");
     }
 
     override public void OnExit()
@@ -25,6 +28,9 @@ public class RunningState : AbstractState
 
     private void OnPlayerWin()
     {
+        AudioPlayer.StopSound ("Music_Gameplay");
+        AudioPlayer.PlaySound ("Music_VictoryStinger");
+
         StateMachine.ChangeState(eGameState.Results);
     }
 }

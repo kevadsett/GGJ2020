@@ -5,6 +5,13 @@ public class TitleState : AbstractState
     {
     }
 
+
+    override public void OnEnter()
+    {
+        AudioPlayer.PlaySound ("Music_Menu");
+        base.OnEnter ();
+    }
+
     override public void Update()
     {
         if (Input.anyKeyDown)
