@@ -28,6 +28,8 @@ public class JunkMachine : MonoBehaviour
     public int MachineId;
 
     public float SlotSpreadAngleDegrees = 180f;
+    public float SlotAngleOffset;
+    public Vector3 SlotPosOffset;
 
     public Transform JunkDisplayPointCentre;
 
@@ -53,11 +55,14 @@ public class JunkMachine : MonoBehaviour
 
             position *= SlotSpreadAngleRadians;
             position -= SlotSpreadAngleRadians / 2f;
+
+            position += SlotAngleOffset * Mathf.Deg2Rad;
+
             GameObject JunkTypeDisplayObject = GameObject.Instantiate(
                 JunkTypeDisplayPrefab, new Vector3(
                 JunkDisplayPointCentre.position.x + Mathf.Sin(position),
                 JunkDisplayPointCentre.position.y + Mathf.Cos(position),
-                JunkDisplayPointCentre.position.z),
+                JunkDisplayPointCentre.position.z) + SlotPosOffset,
                 JunkDisplayPointCentre.rotation,
                 JunkDisplayPointCentre);
 
