@@ -5,9 +5,6 @@ using UnityEngine.Events;
 
 public class JunkMachine : MonoBehaviour
 {
-
-    public static int NextMachineId = 0;
-
     [System.Serializable]
     public class MyIntEvent : UnityEvent<int>
     {
@@ -19,6 +16,8 @@ public class JunkMachine : MonoBehaviour
     public int MachineId;
     public int JunkRequirementCount;
 
+    public float SlotSpreadAngleDegrees = 180f;
+
     public Transform JunkDisplayPointCentre;
 
     public GameObject JunkTypeDisplayPrefab;
@@ -28,15 +27,15 @@ public class JunkMachine : MonoBehaviour
     private int CurrentlyMetRequirements;
     void Start()
     {
-        MachineId = NextMachineId++;
         JunkSlotDisplayInstances = new Dictionary<eJunkType, List<JunkSlotDisplay>>();
+        float SlotSpreadAngleRadians = SlotSpreadAngleDegrees / 180 * Mathf.PI;
         for(int i = 0; i < JunkRequirementCount; i++)
         {
             float position = i/(float)(JunkRequirementCount - 1);
            // Debug.Log(position);
 
-            position *= Mathf.PI;
-            position -= Mathf.PI / 2f;
+            position *= SlotSpreadAngleRadians;
+            position -= SlotSpreadAngleRadians / 2f;
             GameObject JunkTypeDisplayObject = GameObject.Instantiate(
                 JunkTypeDisplayPrefab, new Vector3(
                 JunkDisplayPointCentre.position.x + Mathf.Sin(position),
