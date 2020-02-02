@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,6 +7,17 @@ using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {
+    public enum eState
+    {
+        Moving,
+        Dashing,
+        Stunned
+    }
+    public MeshRenderer ScreenRenderer;
+    public Material NormalMaterial;
+    public Material StunnedMaterial;
+    
+
     // Start is called before the first frame update
     Rigidbody2D rb;
 
@@ -21,25 +33,25 @@ public class CharacterMovement : MonoBehaviour
     public CharacterAnimator charAnimator;
 
     private float dashTime;
-    public bool isDashing;
+    
 
     [SerializeField]
-    private float timer;
+    private float DashTimer;
     public AnimationCurve animationCurve;
     [Space]
     private Vector2 i_movement;
-
+    public eState State { get; private set; }
+    private float StunTimer;
+    public float StunDuration = 1f;
     PlayerControls controls;
 
-    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        timer = 999;
-        //controls.Gameplay.Movement.canceled += context => OnMovementCancelled();
-
+        DashTimer = 999;
 
     }
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -51,9 +63,30 @@ public class CharacterMovement : MonoBehaviour
         HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
         // Movement();
 
-        timer += Time.deltaTime;
-        if (timer >= 0.2f) isDashing = false;
-        runSpeed = BaseRunSpeed + animationCurve.Evaluate(timer) * MaxDashOffset;
+        switch (State)
+        {
+        case eState.Moving:
+            runSpeed = BaseRunSpeed;
+            break;
+        case eState.Dashing:
+            DashTimer += Time.deltaTime;
+            if (DashTimer > 0.2f)
+            {
+                State = eState.Moving;
+            }
+            runSpeed = BaseRunSpeed + animationCurve.Evaluate(DashTimer) * MaxDashOffset;
+            break;
+        case eState.Stunned:
+            runSpeed = 0;
+            StunTimer += Time.deltaTime;
+            if (StunTimer > StunDuration)
+            {
+                State = eState.Moving;
+                ScreenRenderer.material = NormalMaterial;
+            }
+            break;
+        }
+        
         HandleDash();
     }
 
@@ -73,6 +106,14 @@ public class CharacterMovement : MonoBehaviour
         // update visuals
         charAnimator.movementVec = MovementVector;
     }
+
+    public void SetStunned()
+    {
+        State = eState.Stunned;
+        StunTimer = 0;
+        ScreenRenderer.material = StunnedMaterial;
+    }
+
     public void HandleMovement() {
 
         horizontal = vertical = 0;
@@ -111,14 +152,13 @@ public class CharacterMovement : MonoBehaviour
     public void HandleDash() {
         if ((Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1 ))
         {
-            timer = 0;
-            isDashing = true;
+            DashTimer = 0;
+            State = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
-
         } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
         {
-            timer = 0;
-            isDashing = true;
+            DashTimer = 0;
+            State = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         }
        
@@ -131,8 +171,8 @@ public class CharacterMovement : MonoBehaviour
 
     public void OnDash(InputValue val)
     {
-        timer = 0;
-        isDashing = true;
+        DashTimer = 0;
+        State = eState.Dashing;
     }
     public void Movement()
     {
