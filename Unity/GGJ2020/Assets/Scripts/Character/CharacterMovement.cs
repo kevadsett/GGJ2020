@@ -100,10 +100,13 @@ public class CharacterMovement : MonoBehaviour
         {
             timer = 0;
             isDashing = true;
+            AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
+
         } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
         {
             timer = 0;
             isDashing = true;
+            AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         }
        
     }
