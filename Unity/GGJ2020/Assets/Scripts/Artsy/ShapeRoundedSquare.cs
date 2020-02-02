@@ -54,6 +54,8 @@ public class ShapeRoundedSquare : MonoBehaviour
         _bw = BaseWidth;
         _pw = PeakWidth;
         _h = Height;
+        _ns = NumSegments;
+        _sr = SquarenessRatio;
     }
     
     Vector3 CalculateRadialPos (float a)
