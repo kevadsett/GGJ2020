@@ -68,8 +68,11 @@ public class junkInteraction : MonoBehaviour
 
     private void dropJunk() {
         Vector3 spawnPosition = new Vector3(MyJunk.transform.position.x, Random.value + MyJunk.transform.position.y - 1.6f, MyJunk.transform.position.z); //To spawn Detached-Objects in better place.
-        CurrentInactiveJunk.transform.position = spawnPosition;
-        CurrentInactiveJunk.SetActive(true);
+        if (CurrentInactiveJunk != null)
+        {
+            CurrentInactiveJunk.transform.position = spawnPosition;
+            CurrentInactiveJunk.SetActive(true);
+        }
         isCarrying = false;
         MyJunk.gameObject.SetActive(isCarrying);
 

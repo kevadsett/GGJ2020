@@ -11,7 +11,7 @@ public class RunningState : AbstractState
         base.OnEnter();
 
         SceneManager.LoadScene("Running", LoadSceneMode.Additive);
-        
+
         GameObject.FindObjectsOfType<PointsSystem>()[0].Reset();
 
         PointsSystem.PlayerWinEvent.AddListener(OnPlayerWin);
@@ -21,8 +21,6 @@ public class RunningState : AbstractState
     {
         base.OnExit();
         SceneManager.UnloadSceneAsync("Running");
-        JunkMachine.NextMachineId = 0;
-        PlayerId.NextPlayerId = 0;
     }
 
     private void OnPlayerWin()
