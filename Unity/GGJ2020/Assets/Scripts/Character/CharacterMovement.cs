@@ -109,6 +109,10 @@ public class CharacterMovement : MonoBehaviour
 
     public void SetStunned()
     {
+        if (State == eState.Stunned)
+        {
+            return;
+        }
         State = eState.Stunned;
         StunTimer = 0;
         ScreenRenderer.material = StunnedMaterial;
@@ -150,6 +154,10 @@ public class CharacterMovement : MonoBehaviour
        // }
     }
     public void HandleDash() {
+        if (State == eState.Stunned)
+        {
+            return;
+        }
         if ((Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1 ))
         {
             DashTimer = 0;
@@ -171,13 +179,24 @@ public class CharacterMovement : MonoBehaviour
 
     public void OnDash(InputValue val)
     {
+        if (State == eState.Stunned)
+        {
+            return;
+        }
         DashTimer = 0;
         State = eState.Dashing;
     }
     public void Movement()
     {
-        horizontal = i_movement.x;
-        vertical = i_movement.y;
+        if (State == eState.Stunned)
+        {
+            horizontal = vertical = 0;
+        }
+        else
+        {
+            horizontal = i_movement.x;
+            vertical = i_movement.y;
+        }
     }
 
 
