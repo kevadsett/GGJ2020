@@ -41,7 +41,7 @@ public class JunkSpawner : MonoBehaviour
             GameObject CurrentJunkObject = GameObject.Instantiate(JunkPrefab, new Vector3(
                 (Random.value * 2f - 1) * HorizontalSpread,
                 (Random.value * 2f - 1) * VerticalSpread,
-                0),
+                transform.position.z),
                 Quaternion.identity,
                 transform);
 

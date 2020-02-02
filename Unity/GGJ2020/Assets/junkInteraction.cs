@@ -6,7 +6,7 @@ public class junkInteraction : MonoBehaviour
     // Start is called before the first frame update
     Rigidbody2D rb;
 
-    public JunkBehaviour MyJunk;
+    public JunkDisplay MyJunk;
 
     public bool isCarrying = false;
 
@@ -18,7 +18,6 @@ public class junkInteraction : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         MyJunk.gameObject.SetActive(false);
-        MyJunk.GetComponent<Rigidbody2D>().Sleep();
         MyId = GetComponent<PlayerId>();
     }
 
@@ -72,7 +71,7 @@ public class junkInteraction : MonoBehaviour
     }
 
     private void dropJunk() {
-        Vector3 spawnPosition = new Vector3(MyJunk.transform.position.x, Random.value + MyJunk.transform.position.y - 1.6f, MyJunk.transform.position.z); //To spawn Detached-Objects in better place.
+        Vector3 spawnPosition = new Vector3(MyJunk.transform.position.x, Random.value + MyJunk.transform.position.y - 1.6f, -5); //To spawn Detached-Objects in better place.
         if (CurrentInactiveJunk != null)
         {
             CurrentInactiveJunk.transform.position = spawnPosition;

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: JunkSlotDefinitionB
   m_EditorClassIdentifier: 
   Type: 1
+  JunkSprite: {fileID: 21300000, guid: 26d8a416f371a4161919fa41e66240c2, type: 3}
   FullSprite: {fileID: 21300000, guid: 8f58fa02b3b0c4a4e8425363dcd9880a, type: 3}
   EmptySprite: {fileID: 21300000, guid: f9b20b88f41314c9d85a91ef31e3309f, type: 3}
