@@ -104,7 +104,7 @@ public class CharacterMovement : MonoBehaviour
         rb.velocity = MovementVector * runSpeed;
 
         // update visuals
-        charAnimator.movementVec = MovementVector;
+        charAnimator.movementVec = MovementVector * runSpeed;
     }
 
     public void SetStunned()
