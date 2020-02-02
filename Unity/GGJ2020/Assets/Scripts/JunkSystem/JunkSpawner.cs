@@ -18,10 +18,15 @@ public class JunkSpawner : MonoBehaviour
     private float NextSpawnDelay;
 
     private int SpawnedJunkCount;
+
+    private eJunkType LastSpawnedJunkType;
+    private int JunkTypeCount;
     void Start()
     {
         NextSpawnDelay = Random.Range(RandomDelayMin, RandomDelayMax);
         JunkMachine.JunkSlottedEvent.AddListener(OnJunkSlotted);
+        JunkTypeCount = System.Enum.GetNames(typeof(eJunkType)).Length;
+        LastSpawnedJunkType = (eJunkType)Random.Range(0, JunkTypeCount);
     }
     void Update()
     {
@@ -33,12 +38,19 @@ public class JunkSpawner : MonoBehaviour
 
         if (SpawnTimer >= NextSpawnDelay)
         {
-            GameObject.Instantiate(JunkPrefab, new Vector3(
+            GameObject CurrentJunkObject = GameObject.Instantiate(JunkPrefab, new Vector3(
                 (Random.value * 2f - 1) * HorizontalSpread,
                 (Random.value * 2f - 1) * VerticalSpread,
                 0),
                 Quaternion.identity,
                 transform);
+
+            int RandomIncrementOffset = Random.Range(-1, 1);
+            JunkBehaviour CurrentJunkBehaviour = CurrentJunkObject.GetComponent<JunkBehaviour>();
+            int NextSpawnedJunkTypeInt = ((int)LastSpawnedJunkType + RandomIncrementOffset + JunkTypeCount) % JunkTypeCount;
+            CurrentJunkBehaviour.SetJunkType((eJunkType)NextSpawnedJunkTypeInt);
+            LastSpawnedJunkType = (eJunkType)NextSpawnedJunkTypeInt;
+
             NextSpawnDelay = Random.Range(RandomDelayMin, RandomDelayMax);
             SpawnTimer = 0;
             SpawnedJunkCount++;

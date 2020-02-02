@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class JunkBehaviour : MonoBehaviour
 {
-    public static int DEBUG_ID = 0;
-    public int MyId;
     public eJunkType JunkType { get; private set; }
     public GameObject JunkSlotDisplayPrefab;
 
@@ -13,12 +11,8 @@ public class JunkBehaviour : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("Id: " + MyId);
-        MyId = DEBUG_ID++;
         GameObject MyJunkSlotDisplayObject = GameObject.Instantiate(JunkSlotDisplayPrefab, transform);
         MyJunkSlotDisplay = MyJunkSlotDisplayObject.GetComponent<JunkSlotDisplay>();
-
-        JunkType = (eJunkType)Random.Range(0, 3);
 
         MyJunkSlotDisplay.SetJunkType(JunkType);
         MyJunkSlotDisplay.SetSlotStatus(JunkSlotDisplay.eJunkSlotStatus.Filled);
@@ -27,6 +21,9 @@ public class JunkBehaviour : MonoBehaviour
     public void SetJunkType(eJunkType NewType)
     {
         JunkType = NewType;
-        MyJunkSlotDisplay.SetJunkType(JunkType);
+        if (MyJunkSlotDisplay)
+        {
+            MyJunkSlotDisplay.SetJunkType(JunkType);
+        }
     }
 }

@@ -47,5 +47,6 @@ MonoBehaviour:
   RandomDelayMax: 5
   HorizontalSpread: 2
   VerticalSpread: 2
+  MaxSpawnedJunkCount: 5
   JunkPrefab: {fileID: 9035833383987470625, guid: 7768918245e4a47289b6d0c6296a8f96,
     type: 3}
