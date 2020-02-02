@@ -67,6 +67,8 @@ public class junkInteraction : MonoBehaviour
                 AudioPlayer.PlaySound ("SFX_Hit", transform.position);
                 GetComponent<CharacterMovement>().SetStunned();
                 dropJunk();
+
+                CameraShake.Shake(col.gameObject.GetComponent<CharacterMovement>().MovementVector);
             }
         }
     }
