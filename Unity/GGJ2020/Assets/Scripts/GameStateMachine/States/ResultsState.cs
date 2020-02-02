@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public class ResultsState : AbstractState
 {
     public static float ResultDelay = 0.5f;
@@ -11,6 +13,7 @@ public class ResultsState : AbstractState
     {
         base.OnEnter();
         StateTimer = 0;
+        SceneManager.LoadScene("Results", LoadSceneMode.Additive);
     }
 
     override public void Update()
@@ -25,5 +28,11 @@ public class ResultsState : AbstractState
         {
             StateMachine.ChangeState(eGameState.Running);
         }
+    }
+
+    override public void OnExit()
+    {
+        base.OnExit();
+        SceneManager.UnloadSceneAsync("Results");
     }
 }
