@@ -38,9 +38,13 @@ public class junkInteraction : MonoBehaviour
             MyJunk.SetJunkType(TheirJunk.JunkType);
             CurrentInactiveJunk = other.gameObject;
             CurrentInactiveJunk.SetActive(false);
+
+            AudioPlayer.PlaySound ("SFX_Pickup", transform.position);
+
             break;
         case "Player":
             if (this.GetComponent<CharacterMovement>().isDashing) {
+                    AudioPlayer.PlaySound ("SFX_Hit", transform.position);
                     dropJunk();
             } break;
         case "JunkMachine":
@@ -52,6 +56,7 @@ public class junkInteraction : MonoBehaviour
             if (JunkMachine.TrySlotJunk(MyJunk.JunkType, MyId.Id))
             {
                 isCarrying = false;
+                AudioPlayer.PlaySound ("SFX_Repair", transform.position);
             }
             break;
         }
