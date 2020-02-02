@@ -60,8 +60,11 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         // Gives a value between -1 and 1
-        //HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
-         Movement();
+        HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
+        Movement();
+
+        horizontal = Mathf.Clamp(horizontal, -1f, 1f);
+        vertical = Mathf.Clamp(vertical, -1f, 1f);
 
         switch (State)
         {
@@ -176,8 +179,8 @@ public class CharacterMovement : MonoBehaviour
     }
     public void Movement()
     {
-        horizontal = i_movement.x;
-        vertical = i_movement.y;
+        horizontal += i_movement.x;
+        vertical += i_movement.y;
     }
 
 
