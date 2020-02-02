@@ -45,9 +45,8 @@ public class JunkSpawner : MonoBehaviour
                 Quaternion.identity,
                 transform);
 
-            int RandomIncrementOffset = Random.Range(-1, 1);
             JunkBehaviour CurrentJunkBehaviour = CurrentJunkObject.GetComponent<JunkBehaviour>();
-            int NextSpawnedJunkTypeInt = ((int)LastSpawnedJunkType + RandomIncrementOffset + JunkTypeCount) % JunkTypeCount;
+            int NextSpawnedJunkTypeInt = ((int)LastSpawnedJunkType + 1) % JunkTypeCount;
             CurrentJunkBehaviour.SetJunkType((eJunkType)NextSpawnedJunkTypeInt);
             LastSpawnedJunkType = (eJunkType)NextSpawnedJunkTypeInt;
 
