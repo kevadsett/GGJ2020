@@ -16,6 +16,9 @@ public class CharacterMovement : MonoBehaviour
     public MeshRenderer ScreenRenderer;
     public Material NormalMaterial;
     public Material StunnedMaterial;
+
+    public TrailRenderer trail;
+    public float trailTime;
     
 
     // Start is called before the first frame update
@@ -50,6 +53,9 @@ public class CharacterMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         DashTimer = 999;
 
+        trail = GetComponent<TrailRenderer>();
+        trail.enabled = false;
+
     }
 
     void Awake()
@@ -69,13 +75,25 @@ public class CharacterMovement : MonoBehaviour
         switch (State)
         {
         case eState.Moving:
+                if (trail.enabled== true)
+                {
+                   if(trailTime > 0.3f)
+                    {
+                        trail.enabled = false;
+                        trailTime = 0;
+                    }
+                    trailTime += Time.deltaTime;
+                }
             runSpeed = BaseRunSpeed;
             break;
         case eState.Dashing:
+            trail.enabled = true;
             DashTimer += Time.deltaTime;
+                trailTime += Time.deltaTime;
             if (DashTimer > 0.2f)
             {
                 State = eState.Moving;
+                
             }
             runSpeed = BaseRunSpeed + animationCurve.Evaluate(DashTimer) * MaxDashOffset;
             break;
@@ -164,6 +182,7 @@ public class CharacterMovement : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1 ))
         {
             DashTimer = 0;
+            trailTime = 0;
             State = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
@@ -187,6 +206,7 @@ public class CharacterMovement : MonoBehaviour
             return;
         }
         DashTimer = 0;
+        trailTime = 0;
         State = eState.Dashing;
     }
     public void Movement()
