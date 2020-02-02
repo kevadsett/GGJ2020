@@ -35,7 +35,8 @@ public class CharacterMovement : MonoBehaviour
 
     public CharacterAnimator charAnimator;
 
-    private float dashTime;
+    private bool isDashReady;
+    private float dontDash;
     
 
     [SerializeField]
@@ -52,6 +53,8 @@ public class CharacterMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         DashTimer = 999;
+        isDashReady = true;
+        
 
         trail = GetComponent<TrailRenderer>();
         trail.enabled = false;
@@ -175,7 +178,7 @@ public class CharacterMovement : MonoBehaviour
        // }
     }
     public void HandleDash() {
-        if (State == eState.Stunned)
+        if (State == eState.Stunned || !isDashReady)
         {
             return;
         }
