@@ -31,7 +31,7 @@ public class CharacterMovement : MonoBehaviour
     public float BaseRunSpeed = 5.0f;
     public float MaxDashOffset = 5.0f;
     private float runSpeed = 5.0f;
-    private Vector2 MovementVector;
+    public Vector2 MovementVector;
 
     public CharacterAnimator charAnimator;
 
