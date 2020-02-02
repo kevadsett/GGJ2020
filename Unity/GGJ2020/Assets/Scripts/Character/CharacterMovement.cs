@@ -60,8 +60,8 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         // Gives a value between -1 and 1
-        HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
-        // Movement();
+        //HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
+         Movement();
 
         switch (State)
         {
