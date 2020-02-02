@@ -8,6 +8,6 @@ public class WinnerDisplay : MonoBehaviour
     void Start()
     {
         Text MyText = GetComponent<Text>();
-        MyText.text = "PLAYER " + (PointsSystem.WinningPlayer + 1) + " WINS!";
+        MyText.text = "P" + (PointsSystem.WinningPlayer + 1) + " WINS!";
     }
 }
