@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class CharacterMovementXBox : MonoBehaviour
 {
-    PlayerControls controls;
     // Start is called before the first frame update
     Rigidbody2D rb;
 
@@ -16,13 +15,6 @@ public class CharacterMovementXBox : MonoBehaviour
     public float runSpeed = 5.0f;
     private Vector2 MovementVector;
 
-    private void Awake()
-    {
-        controls = new PlayerControls();
-
-        controls.Gameplay.Movement.performed += ctx => MovementVector = ctx.ReadValue<Vector2>();
-        controls.Gameplay.Movement.canceled += ctx => MovementVector = Vector2.zero;
-    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,6 +34,10 @@ public class CharacterMovementXBox : MonoBehaviour
             horizontal *= moveLimiter;
             vertical *= moveLimiter;
         }
+        vertical = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+       // MovementVector = new Vector2 (horizontal, vertical);
+
         rb.velocity = MovementVector * runSpeed;
     }
     public void HandleDash()
@@ -50,16 +46,5 @@ public class CharacterMovementXBox : MonoBehaviour
         {
             //Change the runSpeed for a lot    
         }
-    }
- 
-
-    private void OnEnable()
-    {
-        //Debug.Log("controls:" + controls.Gameplay);
-        controls.Gameplay.Enable();
-    }
-    private void OnDisable()
-    {
-        controls.Gameplay.Disable();
     }
 }

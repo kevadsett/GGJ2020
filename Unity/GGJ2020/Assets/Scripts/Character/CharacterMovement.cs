@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {
-    PlayerControls controls;
     // Start is called before the first frame update
     Rigidbody2D rb;
 
@@ -21,26 +20,28 @@ public class CharacterMovement : MonoBehaviour
     public CharacterAnimator charAnimator;
 
     private float dashTime;
+    public bool isDashing;
 
     [SerializeField]
     private float timer;
     public AnimationCurve animationCurve;
-
+    [Space]
+    private Vector2 i_movement;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         timer = 999;
     }
-
     void Update()
     {
         // Gives a value between -1 and 1
-        HandleMovement();
+        //HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
+        Movement();
 
         timer += Time.deltaTime;
+        if (timer >= 0.2f) isDashing = false;
         runSpeed = BaseRunSpeed + animationCurve.Evaluate(timer) * MaxDashOffset;
         HandleDash();
-
     }
 
     void FixedUpdate()
@@ -60,28 +61,67 @@ public class CharacterMovement : MonoBehaviour
         charAnimator.movementVec = MovementVector;
     }
     public void HandleMovement() {
+
         horizontal = vertical = 0;
-       if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+
+        if(this.GetComponent<PlayerId>().Id == 0)
         {
-            vertical = 1;
+            if (Input.GetKey(KeyCode.W)) vertical = 1;
+            if (Input.GetKey(KeyCode.S)) vertical = -1;
+            if (Input.GetKey(KeyCode.A)) horizontal = -1;
+            if (Input.GetKey(KeyCode.D)) horizontal = 1;
+        } else if(this.GetComponent<PlayerId>().Id == 1){
+            if (Input.GetKey(KeyCode.UpArrow)) vertical = 1;
+            if (Input.GetKey(KeyCode.DownArrow)) vertical = -1;
+            if (Input.GetKey(KeyCode.LeftArrow)) horizontal = -1;
+            if (Input.GetKey(KeyCode.RightArrow)) horizontal = 1;
+
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            vertical = -1;
-        }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            horizontal = -1;
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            horizontal = 1;
-        }
+        
+       //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+       // {
+       //     vertical = 1;
+       // }
+       // if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+       // {
+       //     vertical = -1;
+       // }
+       // if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+       // {
+       //     horizontal = -1;
+       // }
+       // if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+       // {
+       //     horizontal = 1;
+       // }
     }
     public void HandleDash() {
-        if (Input.GetKeyDown(KeyCode.Space)){
+        if ((Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1 ))
+        {
             timer = 0;
+            isDashing = true;
+        } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
+        {
+            timer = 0;
+            isDashing = true;
         }
+       
     }
-    
+    public void OnMovement(InputValue value)
+    {
+        
+        i_movement = value.Get<Vector2>();
+    }
+
+    public void OnDash(InputValue value)
+    {
+        timer = 0;
+        isDashing = true;
+    }
+    public void Movement()
+    {
+        horizontal = i_movement.x;
+        vertical = i_movement.y;
+    }
+
 }
