@@ -13,10 +13,6 @@ public class CharacterAnimator : MonoBehaviour
 
     void LateUpdate()
     {
-
-        movementVec = new Vector3 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-
         Vector3 delta = movementVec.normalized - offsetVec;
         float magnitude = Mathf.Min (delta.magnitude, maxAnimSpeed * Time.deltaTime);
 

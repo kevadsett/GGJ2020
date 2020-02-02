@@ -18,6 +18,8 @@ public class CharacterMovement : MonoBehaviour
     private float runSpeed = 5.0f;
     private Vector2 MovementVector;
 
+    public CharacterAnimator charAnimator;
+
     private float dashTime;
 
     [SerializeField]
@@ -53,6 +55,9 @@ public class CharacterMovement : MonoBehaviour
         MovementVector = new Vector2(horizontal, vertical);
         
         rb.velocity = MovementVector * runSpeed;
+
+        // update visuals
+        charAnimator.movementVec = MovementVector;
     }
     public void HandleMovement() {
         horizontal = vertical = 0;

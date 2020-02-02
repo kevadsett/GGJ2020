@@ -21,7 +21,7 @@ public class CharacterPartBouncer : MonoBehaviour
 
     void Update()
     {
-        if (playAnim) tform.localPosition = offset + bounceVec * Mathf.Sin (timeOffset + Time.time * speed);
+        if (playAnim) tform.localPosition = offset + bounceVec * Mathf.Abs (Mathf.Sin (timeOffset + Time.time * speed));
         else tform.localPosition = offset;
     }
 
