@@ -12,7 +12,7 @@ public class junkInteraction : MonoBehaviour
 
     private PlayerId MyId;
 
-    private GameObject CurrentInactiveJunk;
+    public GameObject CurrentInactiveJunk;
 
     void Start()
     {
@@ -24,13 +24,13 @@ public class junkInteraction : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+        
         switch (other.tag)
         {
         case "Junk":
             if (isCarrying)
             {
-                CurrentInactiveJunk.transform.position = MyJunk.transform.position;
-                CurrentInactiveJunk.SetActive(true);
+                    dropJunk();
                
             }
             isCarrying = true;
@@ -39,6 +39,10 @@ public class junkInteraction : MonoBehaviour
             CurrentInactiveJunk = other.gameObject;
             CurrentInactiveJunk.SetActive(false);
             break;
+        case "Player":
+            if (this.GetComponent<CharacterMovement>().isDashing) {
+                    dropJunk();
+            } break;
         case "JunkMachine":
             if (isCarrying == false)
             {
@@ -53,5 +57,21 @@ public class junkInteraction : MonoBehaviour
         }
         MyJunk.gameObject.SetActive(isCarrying);
         
+    }
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Player" )
+        {
+            if (col.gameObject.GetComponent<CharacterMovement>().isDashing) dropJunk();
+        }
+    }
+
+    private void dropJunk() {
+        Vector3 spawnPosition = new Vector3(MyJunk.transform.position.x, Random.value + MyJunk.transform.position.y - 1.6f, MyJunk.transform.position.z); //To spawn Detached-Objects in better place.
+        CurrentInactiveJunk.transform.position = spawnPosition;
+        CurrentInactiveJunk.SetActive(true);
+        isCarrying = false;
+        MyJunk.gameObject.SetActive(isCarrying);
+
     }
 }

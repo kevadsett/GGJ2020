@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {
-    PlayerControls controls;
     // Start is called before the first frame update
     Rigidbody2D rb;
 
@@ -19,11 +18,11 @@ public class CharacterMovement : MonoBehaviour
     private Vector2 MovementVector;
 
     private float dashTime;
+    public bool isDashing;
 
     [SerializeField]
     private float timer;
     public AnimationCurve animationCurve;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,6 +35,7 @@ public class CharacterMovement : MonoBehaviour
         HandleMovement();
 
         timer += Time.deltaTime;
+        if (timer >= 0.2f) isDashing = false;
         runSpeed = BaseRunSpeed + animationCurve.Evaluate(timer) * MaxDashOffset;
         HandleDash();
 
@@ -55,28 +55,52 @@ public class CharacterMovement : MonoBehaviour
         rb.velocity = MovementVector * runSpeed;
     }
     public void HandleMovement() {
+
         horizontal = vertical = 0;
-       if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+
+        if(this.GetComponent<PlayerId>().Id == 0)
         {
-            vertical = 1;
+            if (Input.GetKey(KeyCode.W)) vertical = 1;
+            if (Input.GetKey(KeyCode.S)) vertical = -1;
+            if (Input.GetKey(KeyCode.A)) horizontal = -1;
+            if (Input.GetKey(KeyCode.D)) horizontal = 1;
+        } else if(this.GetComponent<PlayerId>().Id == 1){
+            if (Input.GetKey(KeyCode.UpArrow)) vertical = 1;
+            if (Input.GetKey(KeyCode.DownArrow)) vertical = -1;
+            if (Input.GetKey(KeyCode.LeftArrow)) horizontal = -1;
+            if (Input.GetKey(KeyCode.RightArrow)) horizontal = 1;
+
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            vertical = -1;
-        }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            horizontal = -1;
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            horizontal = 1;
-        }
+        
+       //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+       // {
+       //     vertical = 1;
+       // }
+       // if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+       // {
+       //     vertical = -1;
+       // }
+       // if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+       // {
+       //     horizontal = -1;
+       // }
+       // if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+       // {
+       //     horizontal = 1;
+       // }
     }
     public void HandleDash() {
-        if (Input.GetKeyDown(KeyCode.Space)){
+        if (Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1)
+        {
             timer = 0;
+            isDashing = true;
+        } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
+        {
+            timer = 0;
+            isDashing = true;
         }
+       
     }
     
+
 }
