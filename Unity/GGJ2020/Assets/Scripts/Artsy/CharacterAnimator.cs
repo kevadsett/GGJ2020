@@ -25,7 +25,7 @@ public class CharacterAnimator : MonoBehaviour
 
         for (int i = 0; i < bounceableParts.Length; i++)
         {
-            bounceableParts[i].UpdateBounciness (offsetVec);
+            bounceableParts[i].UpdateBounciness (movementVec);
         }
     }
 }

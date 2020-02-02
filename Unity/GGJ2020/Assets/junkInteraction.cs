@@ -42,11 +42,6 @@ public class junkInteraction : MonoBehaviour
             AudioPlayer.PlaySound ("SFX_Pickup", transform.position);
 
             break;
-        case "Player":
-            if (this.GetComponent<CharacterMovement>().isDashing) {
-                    AudioPlayer.PlaySound ("SFX_Hit", transform.position);
-                    dropJunk();
-            } break;
         case "JunkMachine":
             if (isCarrying == false)
             {
@@ -67,7 +62,12 @@ public class junkInteraction : MonoBehaviour
     {
         if(col.gameObject.tag == "Player" )
         {
-            if (col.gameObject.GetComponent<CharacterMovement>().isDashing) dropJunk();
+            if (col.gameObject.GetComponent<CharacterMovement>().State == CharacterMovement.eState.Dashing)
+            {
+                AudioPlayer.PlaySound ("SFX_Hit", transform.position);
+                GetComponent<CharacterMovement>().SetStunned();
+                dropJunk();
+            }
         }
     }
 
