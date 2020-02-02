@@ -101,6 +101,15 @@ MonoBehaviour:
   JunkDisplayPointCentre: {fileID: 391294448328790206}
   JunkTypeDisplayPrefab: {fileID: 7051950598953853334, guid: 6e909cbe0812b4475a711672e014541e,
     type: 3}
+  PossibleJunkRequirements:
+    List:
+    - JunkTypeList: 000000000000000001000000
+    - JunkTypeList: 000000000100000001000000
+    - JunkTypeList: 000000000100000002000000
+    - JunkTypeList: 010000000100000000000000
+    - JunkTypeList: 010000000100000002000000
+    - JunkTypeList: 020000000200000000000000
+    - JunkTypeList: 020000000200000001000000
 --- !u!61 &3628545004684102974
 BoxCollider2D:
   m_ObjectHideFlags: 0
