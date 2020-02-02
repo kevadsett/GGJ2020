@@ -36,7 +36,7 @@ public class CharacterMovement : MonoBehaviour
     public CharacterAnimator charAnimator;
 
     private bool isDashReady;
-    private float dontDash;
+    private float waitDashTimer;
     
 
     [SerializeField]
@@ -47,6 +47,7 @@ public class CharacterMovement : MonoBehaviour
     public eState State { get; private set; }
     private float StunTimer;
     public float StunDuration = 1f;
+    private float dashWait = 0.5f;
     PlayerControls controls;
 
     void Start()
@@ -75,6 +76,8 @@ public class CharacterMovement : MonoBehaviour
         horizontal = Mathf.Clamp(horizontal, -1f, 1f);
         vertical = Mathf.Clamp(vertical, -1f, 1f);
 
+        waitDashTimer += Time.deltaTime;
+        if (waitDashTimer > dashWait) isDashReady = true;
         switch (State)
         {
         case eState.Moving:
@@ -90,8 +93,10 @@ public class CharacterMovement : MonoBehaviour
             runSpeed = BaseRunSpeed;
             break;
         case eState.Dashing:
+
             trail.enabled = true;
             DashTimer += Time.deltaTime;
+            
                 trailTime += Time.deltaTime;
             if (DashTimer > 0.2f)
             {
@@ -159,37 +164,22 @@ public class CharacterMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.RightArrow)) horizontal = 1;
 
         }
-        
-       //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-       // {
-       //     vertical = 1;
-       // }
-       // if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-       // {
-       //     vertical = -1;
-       // }
-       // if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-       // {
-       //     horizontal = -1;
-       // }
-       // if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-       // {
-       //     horizontal = 1;
-       // }
     }
     public void HandleDash() {
         if (State == eState.Stunned || !isDashReady)
         {
             return;
         }
-        if ((Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1 ))
+        if (((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.M) )&& this.GetComponent<PlayerId>().Id == 1 ))
         {
+            waitDashTimer = 0; isDashReady = false;
             DashTimer = 0;
             trailTime = 0;
             State = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
         {
+            waitDashTimer = 0; isDashReady = false;
             DashTimer = 0;
             State = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
