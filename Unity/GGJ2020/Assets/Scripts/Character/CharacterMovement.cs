@@ -174,6 +174,10 @@ public class CharacterMovement : MonoBehaviour
         {
             return;
         }
+        if (Mathf.Abs (horizontal) + Mathf.Abs (vertical) < 0.95f) // not touching joystick enough, you do not deserve to dash you lazy boy
+        {
+            return;
+        }
         if (((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.M) )&& this.GetComponent<PlayerId>().Id == 1 ))
         {
             waitDashTimer = 0; isDashReady = false;
@@ -211,6 +215,11 @@ public class CharacterMovement : MonoBehaviour
         }
 
         if (DashTimer < DashDuration + DashCooldownDuration)
+        {
+            return;
+        }
+
+        if (Mathf.Abs (horizontal) + Mathf.Abs (vertical) < 0.95f) // not touching joystick enough, you do not deserve to dash you lazy boy
         {
             return;
         }
