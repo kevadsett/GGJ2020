@@ -8,6 +8,8 @@ public class FaceObjective : MonoBehaviour
     
     void Update()
     {
+        transform.localScale = Vector3.one * ((transform.parent.GetComponent<junkInteraction>().isCarrying) ? 1 : 0);
+
         transform.up = (objTForm.position - transform.position).normalized;
     }
 }
