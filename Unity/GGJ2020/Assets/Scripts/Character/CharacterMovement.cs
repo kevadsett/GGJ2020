@@ -186,21 +186,32 @@ public class CharacterMovement : MonoBehaviour
         }
        
     }
-    public void OnMovement(InputValue value)
+    public void OnMovement(InputAction.CallbackContext context)
     {
+        if (context.performed)
+        {
+            i_movement = context.ReadValue<Vector2>();
+        }
 
-        i_movement = value.Get<Vector2>();
+        if (context.canceled)
+        {
+            i_movement = Vector2.zero;
+        }
     }
 
-    public void OnDash(InputValue val)
+    public void OnDash(InputAction.CallbackContext context)
     {
         if (State == eState.Stunned)
         {
             return;
         }
-        DashTimer = 0;
-        trailTime = 0;
-        State = eState.Dashing;
+
+        if (context.performed)
+        {
+            DashTimer = 0;
+            trailTime = 0;
+            State = eState.Dashing;
+        }
     }
     public void Movement()
     {
