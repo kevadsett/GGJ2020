@@ -918,7 +918,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7998615837089485899}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2720401829879967991
 MeshFilter:
@@ -1517,7 +1517,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7998615837089485899}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2720401831564599176
 MeshFilter:
@@ -1864,6 +1864,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4838720624785305878}
   - {fileID: 2720401831564599173}
   - {fileID: 2720401829879967988}
   m_Father: {fileID: 2720401830457667628}
@@ -2066,7 +2067,6 @@ Transform:
   - {fileID: 2720401830457667628}
   - {fileID: 2720401831567671646}
   - {fileID: 2720401831770139546}
-  - {fileID: 4838720624785305878}
   m_Father: {fileID: 2720401830385322907}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2977,7 +2977,7 @@ GameObject:
   - component: {fileID: 4064363266044736832}
   - component: {fileID: 1410384795479632521}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2991,11 +2991,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9032282745550034520}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.55, z: 0.2}
+  m_LocalPosition: {x: 0, y: -0.55, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7636545024848002783}
-  m_RootOrder: 5
+  m_Father: {fileID: 7998615837089485899}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3650703902069793600
 MeshFilter:
