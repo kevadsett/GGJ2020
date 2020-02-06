@@ -41,9 +41,11 @@ public class JunkSlotDisplay : MonoBehaviour
         {
         case eJunkSlotStatus.Filled:
             MySpriteRenderer.sprite = Accessor.GetDefinitionByType(JunkType).FullSprite;
+            MySpriteRenderer.color = Color.white;
             break;
         case eJunkSlotStatus.Empty:
             MySpriteRenderer.sprite = Accessor.GetDefinitionByType(JunkType).EmptySprite;
+            MySpriteRenderer.color = Color.grey;
             break;
         }
     }
