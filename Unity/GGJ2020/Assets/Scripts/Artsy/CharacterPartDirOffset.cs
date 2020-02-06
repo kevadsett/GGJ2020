@@ -18,6 +18,8 @@ public class CharacterPartDirOffset : MonoBehaviour
 
     public void OffsetUpdate (Vector3 dir)
     {
-        tform.localPosition = dir * distance + offset;
+        if (tform != null) {
+            tform.localPosition = dir * distance + offset;
+        }
     }
 }
