@@ -19,7 +19,9 @@ public class CharacterMovement : MonoBehaviour
 
     public TrailRenderer trail;
     public float trailTime;
-    
+    private float CarryingSlowdownMultiplier = 0.5f;
+    public float CarryingSlowdownMultiplierDash = 0.2f;
+
 
     // Start is called before the first frame update
     Rigidbody2D rb;
@@ -49,6 +51,7 @@ public class CharacterMovement : MonoBehaviour
     public float StunDuration = 1f;
     private float dashWait = 0.5f;
     PlayerControls controls;
+    private junkInteraction junkInteraction;
 
     void Start()
     {
@@ -60,6 +63,8 @@ public class CharacterMovement : MonoBehaviour
         trail = GetComponent<TrailRenderer>();
         trail.enabled = false;
 
+        junkInteraction = GetComponent<junkInteraction>();
+
     }
 
     void Awake()
@@ -69,41 +74,37 @@ public class CharacterMovement : MonoBehaviour
     }
     void Update()
     {
-        // Gives a value between -1 and 1
-        HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
-        Movement();
-
-        horizontal = Mathf.Clamp(horizontal, -1f, 1f);
-        vertical = Mathf.Clamp(vertical, -1f, 1f);
-
-        waitDashTimer += Time.deltaTime;
-        if (waitDashTimer > dashWait) isDashReady = true;
         switch (State)
         {
         case eState.Moving:
-                if (trail.enabled== true)
+            // Gives a value between -1 and 1
+            HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
+            Movement();
+
+            if (trail.enabled== true)
+            {
+                if(trailTime > 0.3f)
                 {
-                   if(trailTime > 0.3f)
-                    {
-                        trail.enabled = false;
-                        trailTime = 0;
-                    }
-                    trailTime += Time.deltaTime;
+                    trail.enabled = false;
+                    trailTime = 0;
                 }
-            runSpeed = BaseRunSpeed;
+                trailTime += Time.deltaTime;
+            }
+
+            runSpeed = BaseRunSpeed * (junkInteraction.isCarrying ? CarryingSlowdownMultiplier : 1);
             break;
         case eState.Dashing:
 
             trail.enabled = true;
             DashTimer += Time.deltaTime;
             
-                trailTime += Time.deltaTime;
+            trailTime += Time.deltaTime;
+
             if (DashTimer > 0.2f)
             {
-                State = eState.Moving;
-                
+                State = eState.Moving;   
             }
-            runSpeed = BaseRunSpeed + animationCurve.Evaluate(DashTimer) * MaxDashOffset;
+            runSpeed = BaseRunSpeed + animationCurve.Evaluate(DashTimer) * (junkInteraction.isCarrying ? CarryingSlowdownMultiplierDash : 1) * MaxDashOffset;
             break;
         case eState.Stunned:
             runSpeed = 0;
@@ -116,21 +117,20 @@ public class CharacterMovement : MonoBehaviour
             break;
         }
         
+        horizontal = Mathf.Clamp(horizontal, -1f, 1f);
+        vertical = Mathf.Clamp(vertical, -1f, 1f);
+        
         HandleDash();
+
+        waitDashTimer += Time.deltaTime;
+        if (waitDashTimer > dashWait) isDashReady = true;
     }
 
     void FixedUpdate()
     {
-        if (horizontal != 0 && vertical != 0) // Check for diagonal movement
-        {
-            // limit movement speed diagonally, so you move at 70% speed
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
-        }
-
         MovementVector = new Vector2(horizontal, vertical);
         
-        rb.velocity = MovementVector * runSpeed;
+        rb.velocity = Vector3.ClampMagnitude(MovementVector * runSpeed, runSpeed);
 
         // update visuals
         charAnimator.movementVec = MovementVector * runSpeed;
