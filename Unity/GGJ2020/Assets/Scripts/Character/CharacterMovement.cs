@@ -37,6 +37,7 @@ public class CharacterMovement : MonoBehaviour
     public Vector2 MovementVector;
 
     public CharacterAnimator charAnimator;
+    public FaceSelecta faceSelecta;
 
     private bool isDashReady;
     private float waitDashTimer;
@@ -104,7 +105,7 @@ public class CharacterMovement : MonoBehaviour
 
             if (DashTimer > DashDuration)
             {
-                State = eState.Moving;   
+                State = faceSelecta.state = eState.Moving;   
             }
             runSpeed = BaseRunSpeed + animationCurve.Evaluate(DashTimer) * (junkInteraction.isCarrying ? CarryingSlowdownMultiplierDash : 1) * MaxDashOffset;
             break;
@@ -113,7 +114,7 @@ public class CharacterMovement : MonoBehaviour
             StunTimer += Time.deltaTime;
             if (StunTimer > StunDuration)
             {
-                State = eState.Moving;
+                State = faceSelecta.state = eState.Moving;
                 ScreenRenderer.material = NormalMaterial;
             }
             break;
@@ -144,7 +145,7 @@ public class CharacterMovement : MonoBehaviour
         {
             return;
         }
-        State = eState.Stunned;
+        State = faceSelecta.state = eState.Stunned;
         StunTimer = 0;
         ScreenRenderer.material = StunnedMaterial;
     }
@@ -172,18 +173,22 @@ public class CharacterMovement : MonoBehaviour
         {
             return;
         }
+        if (Mathf.Abs (horizontal) + Mathf.Abs (vertical) < 0.95f) // not touching joystick enough, you do not deserve to dash you lazy boy
+        {
+            return;
+        }
         if (((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.M) )&& this.GetComponent<PlayerId>().Id == 1 ))
         {
             waitDashTimer = 0; isDashReady = false;
             DashTimer = 0;
             trailTime = 0;
-            State = eState.Dashing;
+            State = faceSelecta.state = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
         {
             waitDashTimer = 0; isDashReady = false;
             DashTimer = 0;
-            State = eState.Dashing;
+            State = faceSelecta.state = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         }
        
@@ -213,11 +218,16 @@ public class CharacterMovement : MonoBehaviour
             return;
         }
 
+        if (Mathf.Abs (horizontal) + Mathf.Abs (vertical) < 0.95f) // not touching joystick enough, you do not deserve to dash you lazy boy
+        {
+            return;
+        }
+
         if (context.performed)
         {
             DashTimer = 0;
             trailTime = 0;
-            State = eState.Dashing;
+            State = faceSelecta.state = eState.Dashing;
         }
     }
     public void Movement()

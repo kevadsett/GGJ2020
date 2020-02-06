@@ -925,10 +925,90 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1428868752063951846, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1480401124650811889, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
         type: 3}
       propertyPath: m_Name
       value: Audio
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555699115194183283, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568948447675305543, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884513666421665350, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046524213246396634, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3434877951063018097, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462044293247826559, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5318662404856310110, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393407962087613218, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621366857169956874, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5969485294069476262, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333753907177298687, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857450511272413042, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7083748896226070924, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7222008745817500936, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091183230740234279, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8416825093996579612, guid: 6ac9f405a9d2b1b4b8b653c230e4b947,
         type: 3}
