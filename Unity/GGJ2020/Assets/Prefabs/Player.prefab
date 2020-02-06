@@ -103,6 +103,9 @@ MonoBehaviour:
   StunnedMaterial: {fileID: 2100000, guid: c82b88b9214db4ddaa363dfc4b9faf64, type: 2}
   trail: {fileID: 0}
   trailTime: 0
+  CarryingSlowdownMultiplierDash: 0.2
+  DashDuration: 0.2
+  DashCooldownDuration: 0.1
   BaseRunSpeed: 5
   MaxDashOffset: 10
   MovementVector: {x: 0, y: 0}

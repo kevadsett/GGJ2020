@@ -22,6 +22,8 @@ public class CharacterMovement : MonoBehaviour
     private float CarryingSlowdownMultiplier = 0.5f;
     public float CarryingSlowdownMultiplierDash = 0.2f;
 
+    public float DashDuration = 0.2f;
+    public float DashCooldownDuration = 0.5f;
 
     // Start is called before the first frame update
     Rigidbody2D rb;
@@ -74,6 +76,8 @@ public class CharacterMovement : MonoBehaviour
     }
     void Update()
     {
+        DashTimer += Time.deltaTime;
+
         switch (State)
         {
         case eState.Moving:
@@ -96,11 +100,10 @@ public class CharacterMovement : MonoBehaviour
         case eState.Dashing:
 
             trail.enabled = true;
-            DashTimer += Time.deltaTime;
             
             trailTime += Time.deltaTime;
 
-            if (DashTimer > 0.2f)
+            if (DashTimer > DashDuration)
             {
                 State = eState.Moving;   
             }
@@ -202,6 +205,11 @@ public class CharacterMovement : MonoBehaviour
     public void OnDash(InputAction.CallbackContext context)
     {
         if (State == eState.Stunned)
+        {
+            return;
+        }
+
+        if (DashTimer < DashDuration + DashCooldownDuration)
         {
             return;
         }
