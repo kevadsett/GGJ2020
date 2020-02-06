@@ -7,6 +7,7 @@ public class CharacterPartBouncer : MonoBehaviour
     public float speed;
     public float timeOffset;
     public Vector3 bounceVec;
+    public bool alwaysBounce;
     
     Vector3 offset;
     Transform tform;
@@ -27,6 +28,6 @@ public class CharacterPartBouncer : MonoBehaviour
 
     public void UpdateBounciness (Vector3 moveVec)
     {
-        playAnim = moveVec.magnitude > 0.1f;
+        playAnim = moveVec.magnitude > 0.1f || alwaysBounce;
     }
 }
