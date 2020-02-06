@@ -6,6 +6,7 @@ public class JunkBehaviour : MonoBehaviour
 {
     public eJunkType JunkType { get; private set; }
     public JunkDisplay MyJunkSlotDisplay;
+    public bool BeingCarried;
     
     void Start()
     {
