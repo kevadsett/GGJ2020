@@ -27,16 +27,20 @@ public class junkInteraction : MonoBehaviour
         switch (other.tag)
         {
         case "Junk":
+            JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
+            if (TheirJunk.JunkState != JunkBehaviour.eJunkState.Idle)
+            {
+                break;
+            }
+
             if (isCarrying)
             {
-                    dropJunk();
-               
+                dropJunk();
             }
             isCarrying = true;
-            JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
+            TheirJunk.PickUp();
             MyJunk.SetJunkType(TheirJunk.JunkType);
             CurrentInactiveJunk = other.gameObject;
-            CurrentInactiveJunk.SetActive(false);
 
             AudioPlayer.PlaySound ("SFX_Pickup", transform.position);
 
@@ -61,26 +65,52 @@ public class junkInteraction : MonoBehaviour
     {
         if(col.gameObject.tag == "Player" )
         {
-            if (col.gameObject.GetComponent<CharacterMovement>().State == CharacterMovement.eState.Dashing)
-            {
-                AudioPlayer.PlaySound ("SFX_Hit", transform.position);
-                GetComponent<CharacterMovement>().SetStunned();
-                dropJunk();
+            bool anyHit = false;
 
-                CameraShake.Shake(col.gameObject.GetComponent<CharacterMovement>().MovementVector);
+            var myCM = GetComponent<CharacterMovement>();
+            var otherCM = col.gameObject.GetComponent<CharacterMovement>();
+
+            Vector3 between = otherCM.transform.position - myCM.transform.position;
+
+            bool amIDashing = myCM.State == CharacterMovement.eState.Dashing;
+
+            if (otherCM.State == CharacterMovement.eState.Dashing)
+            {
+                if (Vector3.Dot (between, otherCM.MovementVector) <= 0f)
+                {
+                    anyHit = true;
+                    myCM.SetStunned();
+                    dropJunk();
+
+                    CameraShake.Shake(col.gameObject.GetComponent<CharacterMovement>().MovementVector);
+                }
             }
+
+            if (amIDashing)
+            {
+                if (Vector3.Dot (between, myCM.MovementVector) >= 0f)
+                {
+                    anyHit = true;
+                    otherCM.SetStunned();
+                    otherCM.GetComponent<junkInteraction> ().dropJunk();
+                }
+            }
+
+            if (anyHit) AudioPlayer.PlaySound ("SFX_Hit", transform.position);
         }
     }
 
     private void dropJunk() {
-        Vector3 spawnPosition = new Vector3(MyJunk.transform.position.x, Random.value + MyJunk.transform.position.y - 1.6f, -5); //To spawn Detached-Objects in better place.
-        if (CurrentInactiveJunk != null)
+        if (isCarrying == false)
         {
-            CurrentInactiveJunk.transform.position = spawnPosition;
-            CurrentInactiveJunk.SetActive(true);
+            return;
         }
         isCarrying = false;
-        MyJunk.gameObject.SetActive(isCarrying);
+        MyJunk.gameObject.SetActive(false);
 
+        if (CurrentInactiveJunk != null)
+        {
+            CurrentInactiveJunk.GetComponent<JunkBehaviour>().Drop(transform.position);
+        }
     }
 }

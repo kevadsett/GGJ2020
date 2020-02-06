@@ -23,6 +23,7 @@ public class RunningState : AbstractState
     override public void OnExit()
     {
         base.OnExit();
+        PointsSystem.PlayerWinEvent.RemoveListener(OnPlayerWin);
         SceneManager.UnloadSceneAsync("Running");
     }
 

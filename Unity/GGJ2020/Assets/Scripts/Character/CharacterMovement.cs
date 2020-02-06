@@ -19,14 +19,17 @@ public class CharacterMovement : MonoBehaviour
 
     public TrailRenderer trail;
     public float trailTime;
-    
+    public float CarryingSlowdownMultiplier = 0.5f;
+    public float CarryingSlowdownMultiplierDash = 0.2f;
+
+    public float DashDuration = 0.2f;
+    public float DashCooldownDuration = 0.5f;
 
     // Start is called before the first frame update
     Rigidbody2D rb;
 
     float horizontal;
     float vertical;
-    float moveLimiter = 0.7f;
 
     public float BaseRunSpeed = 5.0f;
     public float MaxDashOffset = 5.0f;
@@ -34,9 +37,10 @@ public class CharacterMovement : MonoBehaviour
     public Vector2 MovementVector;
 
     public CharacterAnimator charAnimator;
+    public FaceSelecta faceSelecta;
 
     private bool isDashReady;
-    private float dontDash;
+    private float waitDashTimer;
     
 
     [SerializeField]
@@ -47,7 +51,9 @@ public class CharacterMovement : MonoBehaviour
     public eState State { get; private set; }
     private float StunTimer;
     public float StunDuration = 1f;
+    private float dashWait = 0.5f;
     PlayerControls controls;
+    private junkInteraction junkInteraction;
 
     void Start()
     {
@@ -59,6 +65,8 @@ public class CharacterMovement : MonoBehaviour
         trail = GetComponent<TrailRenderer>();
         trail.enabled = false;
 
+        junkInteraction = GetComponent<junkInteraction>();
+
     }
 
     void Awake()
@@ -68,64 +76,64 @@ public class CharacterMovement : MonoBehaviour
     }
     void Update()
     {
-        // Gives a value between -1 and 1
-        HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
-        Movement();
-
-        horizontal = Mathf.Clamp(horizontal, -1f, 1f);
-        vertical = Mathf.Clamp(vertical, -1f, 1f);
+        DashTimer += Time.deltaTime;
 
         switch (State)
         {
         case eState.Moving:
-                if (trail.enabled== true)
+            // Gives a value between -1 and 1
+            HandleMovement(); //Keyboard-mode if you wanna work with this comment-out below also add a Player to the scene and disable Player Input Manager.
+            Movement();
+
+            if (trail.enabled== true)
+            {
+                if(trailTime > 0.3f)
                 {
-                   if(trailTime > 0.3f)
-                    {
-                        trail.enabled = false;
-                        trailTime = 0;
-                    }
-                    trailTime += Time.deltaTime;
+                    trail.enabled = false;
+                    trailTime = 0;
                 }
-            runSpeed = BaseRunSpeed;
+                trailTime += Time.deltaTime;
+            }
+
+            runSpeed = BaseRunSpeed * (junkInteraction.isCarrying ? CarryingSlowdownMultiplier : 1);
             break;
         case eState.Dashing:
+
             trail.enabled = true;
-            DashTimer += Time.deltaTime;
-                trailTime += Time.deltaTime;
-            if (DashTimer > 0.2f)
+            
+            trailTime += Time.deltaTime;
+
+            if (DashTimer > DashDuration)
             {
-                State = eState.Moving;
-                
+                State = faceSelecta.state = eState.Moving;   
             }
-            runSpeed = BaseRunSpeed + animationCurve.Evaluate(DashTimer) * MaxDashOffset;
+            runSpeed = BaseRunSpeed + animationCurve.Evaluate(DashTimer) * (junkInteraction.isCarrying ? CarryingSlowdownMultiplierDash : 1) * MaxDashOffset;
             break;
         case eState.Stunned:
             runSpeed = 0;
             StunTimer += Time.deltaTime;
             if (StunTimer > StunDuration)
             {
-                State = eState.Moving;
+                State = faceSelecta.state = eState.Moving;
                 ScreenRenderer.material = NormalMaterial;
             }
             break;
         }
         
+        horizontal = Mathf.Clamp(horizontal, -1f, 1f);
+        vertical = Mathf.Clamp(vertical, -1f, 1f);
+        
         HandleDash();
+
+        waitDashTimer += Time.deltaTime;
+        if (waitDashTimer > dashWait) isDashReady = true;
     }
 
     void FixedUpdate()
     {
-        if (horizontal != 0 && vertical != 0) // Check for diagonal movement
-        {
-            // limit movement speed diagonally, so you move at 70% speed
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
-        }
-
         MovementVector = new Vector2(horizontal, vertical);
         
-        rb.velocity = MovementVector * runSpeed;
+        rb.velocity = Vector3.ClampMagnitude(MovementVector * runSpeed, runSpeed);
 
         // update visuals
         charAnimator.movementVec = MovementVector * runSpeed;
@@ -137,7 +145,7 @@ public class CharacterMovement : MonoBehaviour
         {
             return;
         }
-        State = eState.Stunned;
+        State = faceSelecta.state = eState.Stunned;
         StunTimer = 0;
         ScreenRenderer.material = StunnedMaterial;
     }
@@ -159,58 +167,68 @@ public class CharacterMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.RightArrow)) horizontal = 1;
 
         }
-        
-       //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-       // {
-       //     vertical = 1;
-       // }
-       // if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-       // {
-       //     vertical = -1;
-       // }
-       // if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-       // {
-       //     horizontal = -1;
-       // }
-       // if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-       // {
-       //     horizontal = 1;
-       // }
     }
     public void HandleDash() {
         if (State == eState.Stunned || !isDashReady)
         {
             return;
         }
-        if ((Input.GetKeyDown(KeyCode.KeypadEnter) && this.GetComponent<PlayerId>().Id == 1 ))
+        if (Mathf.Abs (horizontal) + Mathf.Abs (vertical) < 0.95f) // not touching joystick enough, you do not deserve to dash you lazy boy
         {
+            return;
+        }
+        if (((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.M) )&& this.GetComponent<PlayerId>().Id == 1 ))
+        {
+            waitDashTimer = 0; isDashReady = false;
             DashTimer = 0;
             trailTime = 0;
-            State = eState.Dashing;
+            State = faceSelecta.state = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         } else if(Input.GetKeyDown(KeyCode.Space) && this.GetComponent<PlayerId>().Id == 0)
         {
+            waitDashTimer = 0; isDashReady = false;
             DashTimer = 0;
-            State = eState.Dashing;
+            State = faceSelecta.state = eState.Dashing;
             AudioPlayer.PlaySound ("SFX_Dash", this.transform.position);
         }
        
     }
-    public void OnMovement(InputValue value)
+    public void OnMovement(InputAction.CallbackContext context)
     {
+        if (context.performed)
+        {
+            i_movement = context.ReadValue<Vector2>();
+        }
 
-        i_movement = value.Get<Vector2>();
+        if (context.canceled)
+        {
+            i_movement = Vector2.zero;
+        }
     }
 
-    public void OnDash(InputValue val)
+    public void OnDash(InputAction.CallbackContext context)
     {
         if (State == eState.Stunned)
         {
             return;
         }
-        DashTimer = 0;
-        trailTime = 0;
-        State = eState.Dashing;
+
+        if (DashTimer < DashDuration + DashCooldownDuration)
+        {
+            return;
+        }
+
+        if (Mathf.Abs (horizontal) + Mathf.Abs (vertical) < 0.95f) // not touching joystick enough, you do not deserve to dash you lazy boy
+        {
+            return;
+        }
+
+        if (context.performed)
+        {
+            DashTimer = 0;
+            trailTime = 0;
+            State = faceSelecta.state = eState.Dashing;
+        }
     }
     public void Movement()
     {
