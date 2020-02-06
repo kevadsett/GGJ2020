@@ -19,7 +19,7 @@ public class CharacterMovement : MonoBehaviour
 
     public TrailRenderer trail;
     public float trailTime;
-    private float CarryingSlowdownMultiplier = 0.5f;
+    public float CarryingSlowdownMultiplier = 0.5f;
     public float CarryingSlowdownMultiplierDash = 0.2f;
 
     public float DashDuration = 0.2f;
@@ -30,7 +30,6 @@ public class CharacterMovement : MonoBehaviour
 
     float horizontal;
     float vertical;
-    float moveLimiter = 0.7f;
 
     public float BaseRunSpeed = 5.0f;
     public float MaxDashOffset = 5.0f;

@@ -27,21 +27,20 @@ public class junkInteraction : MonoBehaviour
         switch (other.tag)
         {
         case "Junk":
+            JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
+            if (TheirJunk.JunkState != JunkBehaviour.eJunkState.Idle)
+            {
+                break;
+            }
+
             if (isCarrying)
             {
                 dropJunk();
             }
-
-            JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
-            if (TheirJunk.BeingCarried)
-            {
-                break;
-            }
             isCarrying = true;
-            TheirJunk.BeingCarried = true;
+            TheirJunk.PickUp();
             MyJunk.SetJunkType(TheirJunk.JunkType);
             CurrentInactiveJunk = other.gameObject;
-            CurrentInactiveJunk.SetActive(false);
 
             AudioPlayer.PlaySound ("SFX_Pickup", transform.position);
 
@@ -82,15 +81,12 @@ public class junkInteraction : MonoBehaviour
         {
             return;
         }
-        Vector3 spawnPosition = new Vector3(MyJunk.transform.position.x, Random.value + MyJunk.transform.position.y - 1.6f, -5); //To spawn Detached-Objects in better place.
+        isCarrying = false;
+        MyJunk.gameObject.SetActive(false);
+
         if (CurrentInactiveJunk != null)
         {
-            CurrentInactiveJunk.transform.position = spawnPosition;
-            CurrentInactiveJunk.SetActive(true);
-            CurrentInactiveJunk.GetComponent<JunkBehaviour>().BeingCarried = false;
+            CurrentInactiveJunk.GetComponent<JunkBehaviour>().Drop(transform.position);
         }
-        isCarrying = false;
-        MyJunk.gameObject.SetActive(isCarrying);
-
     }
 }

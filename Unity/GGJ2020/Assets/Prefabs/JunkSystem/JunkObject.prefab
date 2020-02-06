@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 603096378010499664}
   - component: {fileID: 7988871762886188563}
   - component: {fileID: 7988871762886188560}
-  - component: {fileID: -3050143460892765995}
   m_Layer: 0
   m_Name: JunkObject
   m_TagString: Junk
@@ -48,6 +47,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyJunkSlotDisplay: {fileID: 6291036974744230171}
+  DropBounceAnim:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 5.369646
+      outSlope: 5.369646
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.07662835
+    - serializedVersion: 3
+      time: 0.325
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.75
+      value: 0
+      inSlope: -3.9881124
+      outSlope: 4.225339
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.031290293
+      outWeight: 0.13252884
+    - serializedVersion: 3
+      time: 0.825
+      value: 0
+      inSlope: -4.0100813
+      outSlope: -4.0100813
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.14674035
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  DropDistance: 1
+  DropDuration: 0.2
+  UnpickupableColor: {r: 0.4, g: 0, b: 0, a: 0.24313726}
+  MySpriteRenderer: {fileID: 3964578671421020848}
 --- !u!50 &7988871762886188563
 Rigidbody2D:
   serializedVersion: 4
@@ -95,25 +140,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
---- !u!95 &-3050143460892765995
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9035833383987470625}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e59e7ee6270cd8e458de71b8cd868638, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &7687368349129944907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,6 +212,12 @@ PrefabInstance:
 --- !u!4 &6250437710315500019 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4328248634877877944, guid: a75ee0085d94f422ab7ad80b00dc5dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 7687368349129944907}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &3964578671421020848 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6749215252289385979, guid: a75ee0085d94f422ab7ad80b00dc5dae,
     type: 3}
   m_PrefabInstance: {fileID: 7687368349129944907}
   m_PrefabAsset: {fileID: 0}
