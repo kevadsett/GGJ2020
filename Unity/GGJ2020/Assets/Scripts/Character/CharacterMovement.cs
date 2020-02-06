@@ -30,7 +30,6 @@ public class CharacterMovement : MonoBehaviour
 
     float horizontal;
     float vertical;
-    float moveLimiter = 0.7f;
 
     public float BaseRunSpeed = 5.0f;
     public float MaxDashOffset = 5.0f;
