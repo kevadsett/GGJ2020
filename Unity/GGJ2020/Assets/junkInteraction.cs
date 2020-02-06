@@ -29,11 +29,16 @@ public class junkInteraction : MonoBehaviour
         case "Junk":
             if (isCarrying)
             {
-                    dropJunk();
-               
+                dropJunk();
+            }
+
+            JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
+            if (TheirJunk.BeingCarried)
+            {
+                break;
             }
             isCarrying = true;
-            JunkBehaviour TheirJunk = other.GetComponent<JunkBehaviour>();
+            TheirJunk.BeingCarried = true;
             MyJunk.SetJunkType(TheirJunk.JunkType);
             CurrentInactiveJunk = other.gameObject;
             CurrentInactiveJunk.SetActive(false);
@@ -73,11 +78,16 @@ public class junkInteraction : MonoBehaviour
     }
 
     private void dropJunk() {
+        if (isCarrying == false)
+        {
+            return;
+        }
         Vector3 spawnPosition = new Vector3(MyJunk.transform.position.x, Random.value + MyJunk.transform.position.y - 1.6f, -5); //To spawn Detached-Objects in better place.
         if (CurrentInactiveJunk != null)
         {
             CurrentInactiveJunk.transform.position = spawnPosition;
             CurrentInactiveJunk.SetActive(true);
+            CurrentInactiveJunk.GetComponent<JunkBehaviour>().BeingCarried = false;
         }
         isCarrying = false;
         MyJunk.gameObject.SetActive(isCarrying);
