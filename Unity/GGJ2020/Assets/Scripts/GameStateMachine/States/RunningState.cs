@@ -31,6 +31,7 @@ public class RunningState : AbstractState
     {
         AudioPlayer.StopSound ("Music_Gameplay");
         AudioPlayer.PlaySound ("Music_VictoryStinger");
+        AudioPlayer.PlaySound ("SFX_Yay");
 
         StateMachine.ChangeState(eGameState.Results);
     }
