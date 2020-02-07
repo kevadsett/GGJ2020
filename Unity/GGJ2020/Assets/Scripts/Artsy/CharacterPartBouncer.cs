@@ -22,12 +22,12 @@ public class CharacterPartBouncer : MonoBehaviour
 
     void Update()
     {
-        if (playAnim) tform.localPosition = offset + bounceVec * Mathf.Abs (Mathf.Sin (timeOffset + Time.time * speed));
+        if (playAnim  || alwaysBounce) tform.localPosition = offset + bounceVec * Mathf.Abs (Mathf.Sin (timeOffset + Time.time * speed));
         else tform.localPosition = offset;
     }
 
     public void UpdateBounciness (Vector3 moveVec)
     {
-        playAnim = moveVec.magnitude > 0.1f || alwaysBounce;
+        playAnim = moveVec.magnitude > 0.1f;
     }
 }
