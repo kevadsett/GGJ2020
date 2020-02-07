@@ -11,6 +11,8 @@ public class ResultsColourizer : MonoBehaviour
 
     public Material[] playerMats;
     public Sprite[] rocketSprites;
+    public GameObject[] moustache;
+    public GameObject spot;
 
     // Start is called before the first frame update
     void Start()
@@ -18,5 +20,8 @@ public class ResultsColourizer : MonoBehaviour
         mrRecolMatA.material = playerMats[PointsSystem.WinningPlayer];
         mrRecolMatB.material = playerMats[PointsSystem.WinningPlayer];
         srRecolSprite.sprite = rocketSprites[PointsSystem.WinningPlayer];
+
+        for(int i = 0; i < moustache.Length; i++) moustache[i].SetActive (PointsSystem.WinningPlayer == 3);
+        spot.SetActive (PointsSystem.WinningPlayer == 1);
     }
 }
